@@ -1,16 +1,17 @@
 {
-  "development": {
+  "test": {
     "username": "postgres",
     "password": "root",
     "database": "postgres",
     "host": "localhost",
     "dialect": "postgres"
   },
-  "test": {
+
+  "development": {
     "username": "root",
-    "password": null,
-    "database": "database_test",
-    "host": "127.0.0.1",
+    "password": "root",
+    "database": "i4ias",
+    "host": "localhost",
     "dialect": "mysql"
   },
   "production": {
