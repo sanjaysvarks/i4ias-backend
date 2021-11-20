@@ -24,30 +24,33 @@ let login = (req, res, next) => {
                 }
             ]
         }
-        console.log('condition' ,condition)
         User.findOne({
             where: condition
         }).then((result) => {
-            console.log('result' ,result)
             if (result) {
                 let matched = authService.comparePassword(password, result.password)
                 if (matched) {
                     result.password = undefined
-                    response.success(res, result, "Login Success")
+                    let userJson = result.toJSON();
+                    let token = authService.generateToken(userJson)
+                    userJson.token = token
+                    response.success(res, userJson, "Login Success")
                 }
+                else {
+                    response.error(res, "Invalid credentials")
+                }
+            }
+            else {
                 response.error(res, "Invalid credentials")
             }
-            response.error(res, "Invalid credentials")
         })
 
     } catch (error) {
-        console.log('error' ,error)
-        response.error(res, "Invalid credentials")
+        console.log('error', error)
+        response.error(res)
     }
 
 }
-
-
 
 
 

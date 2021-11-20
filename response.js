@@ -19,4 +19,12 @@ module.exports = {
     });
   },
 
+  errorUnauthorizedToken: function (res) {
+    res.status(401).json({
+      status: 401,
+      success: false,
+      message: 'Authentication token was missing or incorrect'
+    });
+  },
+
 };
