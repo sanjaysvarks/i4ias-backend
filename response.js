@@ -27,4 +27,21 @@ module.exports = {
     });
   },
 
+  errorValidation: function (res,error="Bad input") {
+    res.status(400).json({
+      status:400,
+      success: false,
+      message: error
+    });
+  },
+
+  successPost: function (res,data, itemsName = 'Data') {
+    res.status(201).json({
+      status:201,
+      success: true,
+      message: `The ${itemsName} was created successfully`,
+      data: data
+    });
+  },
+
 };

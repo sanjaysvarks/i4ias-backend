@@ -4,12 +4,16 @@ const User = db.user
 
 const bcrypt = require('bcrypt');
 var jwt = require('jsonwebtoken');
-//const saltRound = 11;
+const saltRound = 11;
 const SECRET = process.env.JWT_SECRET
 
 
 
 module.exports = {
+
+  encyptPassword: (plainPassword) => {
+    return bcrypt.hashSync(plainPassword, saltRound);
+  },
   comparePassword: (plainPassword, hash) => {
     return bcrypt.compareSync(plainPassword, hash)
   },
