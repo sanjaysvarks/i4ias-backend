@@ -12,6 +12,15 @@ module.exports = {
 
   },
 
+  successPost: function (res,data, itemsName = 'Data') {
+    res.status(201).json({
+      status:201,
+      success: true,
+      message: `The ${itemsName} was created successfully`,
+      data: data
+    });
+  },
+
   error: function (res, error = 'Something went wrong') {
     res.status(400).json({
       success: false,
@@ -35,13 +44,11 @@ module.exports = {
     });
   },
 
-  successPost: function (res,data, itemsName = 'Data') {
-    res.status(201).json({
-      status:201,
-      success: true,
-      message: `The ${itemsName} was created successfully`,
-      data: data
+  errorNotFound: function (res,itemsName = 'Data') {
+    res.status(404).json({
+      status:404,
+      success: false,
+      message: `${itemsName} does not exist`
     });
   },
-
 };

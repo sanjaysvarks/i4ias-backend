@@ -1,17 +1,12 @@
 const response = require('../response')
-const db = require('../models/index')
-const User = db.user
-const Op = db.Sequelize.Op
 const authService = require('../services/authServices')
-const loginrepo = require('../repositories/loginRepo')
+const userRepo = require('../repositories/userRepo')
 
-
-let login = async  (req, res, next) => {
+let login = async (req, res, next) => {
     try {
-        const { phone, email, password } = req.body
+        const { phone, email, password } = req.body;
+        let result = await userRepo.getUserByPhoneOrEmail(phone, email)
 
-        let result = await loginrepo.getUserByPhoneOrEmail(phone, email)
-       
         if (result) {
             let matched = authService.comparePassword(password, result.password)
             if (matched) {
@@ -35,8 +30,36 @@ let login = async  (req, res, next) => {
 
 }
 
+
+async function changePassword(req, res, next) {
+    const { currentPassWord, newPassWord, phone, email } = req.body
+    let result = await userRepo.getUserByPhoneOrEmail(phone, email)
+    if (result) {
+
+        let newPassWordEncypted = authService.encyptPassword(newPassWord)
+
+        if (authService.comparePassword(currentPassWord, result.password)) {
+            let updateInfo = {
+                password: newPassWordEncypted
+            }
+            let updateResult = userRepo.updateUser(result.id, updateInfo)
+            if (updateResult)
+                response.success(res, "Password changed successfully")
+            else
+                response.error(res);
+        }
+        else {
+            response.errorValidation(res, "Current password not valid")
+        }
+    }
+    else {
+        response.errorNotFound(res, "User not found")
+    }
+}
+
 module.exports = {
-    login
+    login,
+    changePassword
 
 };
 

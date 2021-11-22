@@ -1,33 +1,25 @@
 const response = require('../response')
-const db = require('../models/index')
-const User = db.user
-const Op = db.Sequelize.Op
-const loginrepo = require('../repositories/loginRepo')
 const userRepo = require('../repositories/userRepo')
 
 
- async function createUser(req,res,next){
-   const { fName, lName, email, phone, password, gender, role, dob, address, pincode, city, state,lastLogin} = req.body 
-   let result = await loginrepo.getUserByPhoneOrEmail(phone, email)
-   if(result) 
-   {
+async function createUser(req, res, next) {
+   const { user } = req.body
+   let result = await userRepo.getUserByPhoneOrEmail(user.phone, user.email)
+   if (result) {
       response.errorValidation(res, "User is already registered with this email id or phone number ")
    }
-   else 
-   {
-      let createdUserData = await userRepo.createNewUser(fName, lName, email, phone, password, gender, role, dob, address, pincode, city, state,lastLogin)
-      if (createdUserData)
-      {
+   else {
+      let createdUserData = await userRepo.createNewUser(user)
+      if (createdUserData) {
          let userJson = JSON.parse(JSON.stringify(createdUserData))
          delete userJson.password
-         response.successPost(res, userJson, "User")
-  
+         response.successPost(res, userJson, "User");
       }
-   } 
-}      
+   }
+}
 
 
 
- module.exports = {
+module.exports = {
    createUser
- }
+}

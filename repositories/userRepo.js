@@ -1,35 +1,54 @@
 const db = require('../models/index')
 const User = db.user
-const authService = require('../services/authServices') 
+const Op = db.Sequelize.Op
+const authService = require('../services/authServices')
 
 
-async function createNewUser(fName, lName, email, phone, password, gender, role, dob, address, pincode, city, state,lastLogin){
-    //create user
-    let user =
+async function getUserByPhoneOrEmail(phone, email) {
+    var condition =
     {
-        id : 25, 
-        fName : fName,
-        lName : lName,
-        email : email,
-        phone : phone,
-        password : authService.encyptPassword(password),
-        gender :  gender,
-        role : role,
-        dob : dob,
-        address : address,
-        pincode : pincode,
-        city : city,
-        state : state,
-        lastLogin: new Date()
+        [Op.or]: [
+            {
+                phone: {
+                    [Op.eq]: phone
+                },
+            },
+            {
+                email: {
+                    [Op.eq]: email
+                }
+            }
+        ]
     }
+    let result = await User.findOne({
+        where: condition
+    })
 
-    const result =  await User.create(user);
     return result;
+}
 
+async function createNewUser(user) {
+    user.password = authService.encyptPassword(user.password);
+    user.id = 31;
+    const result = await User.create(user);
+    return result;
+}
+
+async function updateUser(id, updateInfo) {
+    const result = User.update(updateInfo,
+        {
+            where: { id: id },
+            returning: true
+        }
+    );
+
+    return result;
 }
 
 module.exports = {
-    createNewUser
+    getUserByPhoneOrEmail,
+    createNewUser,
+    updateUser
 
 };
 
