@@ -1,12 +1,4 @@
 {
-  "test": {
-    "username": "postgres",
-    "password": "root",
-    "database": "postgres",
-    "host": "localhost",
-    "dialect": "postgres"
-  },
-
   "development": {
     "username": "root",
     "password": "root",
@@ -14,6 +6,15 @@
     "host": "localhost",
     "dialect": "mysql"
   },
+
+  "test": {
+    "username": "root",
+    "password": "root12",
+    "database": "i4ias",
+    "host": "localhost",
+    "dialect": "mysql"
+  },
+  
   "production": {
     "username": "root",
     "password": null,

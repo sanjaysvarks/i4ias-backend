@@ -1,6 +1,6 @@
 const http = require('http')
 const { app } = require('./app')
-var db = require('./models');
+//var db = require('./models');
 
 http.createServer(app).listen(3000, (err) => {
   if (err) {
@@ -8,7 +8,7 @@ http.createServer(app).listen(3000, (err) => {
     process.exit(2);
   }
 
-  db.sequelize.sync();
+  //db.sequelize.sync();
   console.log(`HTTP server running on ${3000}`);
 
 });

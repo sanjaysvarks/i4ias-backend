@@ -4,13 +4,14 @@ module.exports = (sequelize, DataTypes) => {
     id: {
       allowNull: false,
       primaryKey: true,
+      autoIncrement: true,
       type: DataTypes.INTEGER
     },
     fName: {
       type: DataTypes.STRING,
       allowNull: false
     },
-	lName: {
+	  lName: {
       type: DataTypes.STRING,
       allowNull: true
     },
@@ -36,7 +37,7 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.ENUM,
       values: ['student', 'content_team', 'admin'],
     },
-	dob: DataTypes.STRING,
+	 dob: DataTypes.STRING,
     address: {
       type: DataTypes.TEXT
     },
