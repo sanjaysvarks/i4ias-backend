@@ -11,4 +11,7 @@ router.post('/createUser',
 //middleware.token,
 controller.createUser);
 
+router.post('/getuser',
+controller.getUser)
+
 module.exports = router;

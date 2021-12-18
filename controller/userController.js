@@ -1,5 +1,6 @@
 const response = require('../response')
 const userRepo = require('../repositories/userRepo')
+const RESOURSE_NAME = "User"
 
 
 async function createUser(req, res, next) {
@@ -18,8 +19,16 @@ async function createUser(req, res, next) {
    }
 }
 
+async function getUser(req,res,next){
+   const { user } = req.body 
+   let result =  await userRepo.getUserById(user.id)
+   let userJson = result.toJSON();
+   response.successGet(res, userJson, "User");
+   
+}
 
 
 module.exports = {
-   createUser
+   createUser,
+   getUser
 }

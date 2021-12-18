@@ -20,6 +20,15 @@ module.exports = {
       data: data
     });
   },
+  
+  successGet: function (res,data, itemsName = 'Data') {
+    res.status(200).json({
+      status:200,
+      success: true,
+      message: `${itemsName} fetched successfully`,
+      data: data
+    });
+  },
 
   error: function (res, error = 'Something went wrong') {
     res.status(400).json({

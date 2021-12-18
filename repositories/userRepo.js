@@ -27,6 +27,21 @@ async function getUserByPhoneOrEmail(phone, email) {
     return result;
 }
 
+async function getUserById(id) {
+    var condition =
+    {
+                id: {
+                    [Op.eq]: id
+                }
+      
+    }
+    let result = await User.findOne({
+        where: condition
+    })
+
+    return result;
+}
+
 async function createNewUser(user) {
     user.password = authService.encyptPassword(user.password);
     const result = await User.create(user);
@@ -47,7 +62,8 @@ async function updateUser(id, updateInfo) {
 module.exports = {
     getUserByPhoneOrEmail,
     createNewUser,
-    updateUser
+    updateUser,
+    getUserById
 
 };
 
