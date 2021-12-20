@@ -17,17 +17,20 @@ module.exports = (sequelize, DataTypes) => {
       tags :{
         type: DataTypes.STRING
       },
+      caType :{
+        type: DataTypes.TEXT
+      },
       userId: {
         type: DataTypes.INTEGER,
         allowNull: false
       },
       createdAt: {
         type: DataTypes.DATE,
-        field: 'created_at'
+        field: 'createdAt'
       },
       updatedAt: {
         type: DataTypes.DATE,
-        field: 'updated_at'
+        field: 'updatedAt'
       },
   }, { freezeTableName: true});
   currentAffairs.associate = function(models) {

@@ -5,12 +5,13 @@ const userRepo = require('../repositories/userRepo')
 
 async function createCurrentAffairs(req, res, next) {
     try {
-        const { content, tags, userId, description } = req.body
+        const { content, tags, userId, description,caType } = req.body
         let currentAffairs = {
             content,
             tags,
             userId,
-            description
+            description,
+            caType
         }
 
         let createCurrentAffairsData = await currentAffairsRepo.createCurrentAffairs(currentAffairs)
@@ -49,11 +50,12 @@ async function getCurrentAffairs(req, res, next) {
 
 async function updateCurrentAffairs(req, res, next) {
 
-    const { id, description, content, tags } = req.body
+    const { id, description, content, tags,caType } = req.body
     let updateInfo = {
         description,
         content,
-        tags
+        tags,
+        caType
     }
     let updateResult = await currentAffairsRepo.updateCurrentAffairsData(id, updateInfo)
     if (updateResult) {

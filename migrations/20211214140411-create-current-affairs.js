@@ -21,12 +21,15 @@ module.exports = {
         type: Sequelize.INTEGER,
         allowNull: false
       },
-      created_at: {
+      caType :{
+        type: Sequelize.TEXT
+      },
+      createdAt: {
         type: 'TIMESTAMP',
         defaultValue: Sequelize.literal('CURRENT_TIMESTAMP'),
         allowNull: false
       },
-      updated_at: {
+      updatedAt: {
         type: 'TIMESTAMP',
         defaultValue: Sequelize.literal('CURRENT_TIMESTAMP'),
         allowNull: false
