@@ -17,12 +17,16 @@ module.exports = {
       tags :{
         type: Sequelize.STRING
       },
+      categoryType :{
+        type: Sequelize.TEXT
+      },
       userId: {
         type: Sequelize.INTEGER,
         allowNull: false
       },
-      caType :{
-        type: Sequelize.TEXT
+      lastUpdatedAt:{
+        type: 'TIMESTAMP',
+        allowNull: false
       },
       createdAt: {
         type: 'TIMESTAMP',

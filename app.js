@@ -11,7 +11,13 @@ app.use(bodyParser.urlencoded({
   extended: false
 }));
 
+app.use('/ping', (req,res,next) => {
+  res.send("Server is working!!!.")
+})
+
 route(app);
+
+
 
 module.exports = {
   app
