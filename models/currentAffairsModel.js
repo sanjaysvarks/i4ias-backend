@@ -24,7 +24,7 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.INTEGER,
       allowNull: false
     },
-    lastUpdatedAt: {
+    currentAffairsDate: {
       type: DataTypes.DATE
     },
     createdAt: {
@@ -37,7 +37,12 @@ module.exports = (sequelize, DataTypes) => {
     },
   }, { freezeTableName: true });
   currentAffairs.associate = function (models) {
-    // associations can be defined here
+    models.currentAffairs.hasOne(models.user, {
+      foreignKey: 'id',
+      sourceKey: 'userId',
+      constraints: false,
+      as: 'user'
+    })
   };
   return currentAffairs;
 };

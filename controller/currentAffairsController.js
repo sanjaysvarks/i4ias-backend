@@ -1,18 +1,16 @@
 const response = require('../response')
 const currentAffairsRepo = require('../repositories/currentAffairsRepo')
-const userRepo = require('../repositories/userRepo')
-
 
 async function createCurrentAffairs(req, res, next) {
     try {
-        const { content, tags, userId, description,categoryType,lastUpdatedAt } = req.body
+        const { content, tags, userId, description, categoryType, lastUpdatedAt } = req.body
         let currentAffairs = {
             description,
             content,
             tags,
             categoryType,
             userId,
-            lastUpdatedAt   
+            lastUpdatedAt
         }
 
         let createCurrentAffairsData = await currentAffairsRepo.createCurrentAffairs(currentAffairs)
@@ -35,15 +33,20 @@ async function getCurrentAffairsById(req, res, next) {
     const id = req.query.id
     let result = await currentAffairsRepo.getCurrentAffairsDataById(id)
     if (result) {
-        response.successGet(res, result, "currentAffairs");
+        response.successGet(res, result, "Current Affairs");
     } else {
         response.errorNotFound(res, "Current Affairs");
     }
 }
 async function getCurrentAffairs(req, res, next) {
-    let result = await currentAffairsRepo.getCurrentAffairsData()
+    let categoryType = req.body.categoryType || 'CA';
+    let { limit, pageNo } = req.body;
+    let whereCondition = {
+        categoryType
+    };
+    let result = await currentAffairsRepo.getCurrentAffairsData(whereCondition, limit, limit * pageNo);
     if (result) {
-        response.successGet(res, result, "currentAffairs");
+        response.successGet(res, result, "Current Affairs");
     } else {
         response.errorNotFound(res, "Current Affairs");
     }
@@ -51,7 +54,7 @@ async function getCurrentAffairs(req, res, next) {
 
 async function updateCurrentAffairs(req, res, next) {
 
-    const { id, content, tags, userId, description,categoryType,lastUpdatedAt } = req.body
+    const { id, content, tags, userId, description, categoryType, lastUpdatedAt } = req.body
     let updateInfo = {
         description,
         content,
@@ -81,10 +84,21 @@ async function deleteCurrentAffairs(req, res, next) {
     }
 }
 
+async function getCategoryType(req, res, next) {
+
+    let result = await currentAffairsRepo.getCategoryTypeData()
+    if (result) {
+        response.successGet(res, result, "CategoryType");
+    } else {
+        response.errorNotFound(res, "Category Type");
+    }
+}
+
 module.exports = {
     createCurrentAffairs,
     getCurrentAffairs,
     getCurrentAffairsById,
     updateCurrentAffairs,
-    deleteCurrentAffairs
+    deleteCurrentAffairs,
+    getCategoryType
 }

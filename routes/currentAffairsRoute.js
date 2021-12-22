@@ -21,5 +21,10 @@ router.post('/deletecurrentaffairs',
 controller.deleteCurrentAffairs
 )
 
+router.get('/getcategorytype',
+//middleware.token,
+controller.getCategoryType);
+
+
 
 module.exports = router;

@@ -1,5 +1,7 @@
 const db = require('../models/index')
 const currentAffairs = db.currentAffairs
+const categoryType = db.categoryType
+const user = db.user;
 const Op = db.Sequelize.Op
 
 
@@ -21,8 +23,22 @@ async function getCurrentAffairsDataById(currentAffairsId) {
     return result;
 }
 
-async function getCurrentAffairsData() {
-    let result = await currentAffairs.findAll();
+async function getCurrentAffairsData(where, limit, offset) {
+    let result = await currentAffairs.findAndCountAll({
+        where: where,
+        order: [
+            ['currentAffairsDate', 'DESC'],
+        ],
+        include: [
+            {
+                model: user,
+                attributes: ['fname','lname','updated_at'],
+                as:'user'
+            }
+        ],
+        limit: limit,
+        offset: offset,
+    })
     return result;
 }
 
@@ -43,12 +59,18 @@ async function deleteCurrentAffairsData(currentAffairsIds) {
 }
 
 
+async function getCategoryTypeData() {
+    let result = await categoryType.findAll()
+    return result;
+}
+
 
 module.exports = {
     createCurrentAffairs,
     getCurrentAffairsData,
     updateCurrentAffairsData,
     deleteCurrentAffairsData,
-    getCurrentAffairsDataById
+    getCurrentAffairsDataById,
+    getCategoryTypeData
 
 };

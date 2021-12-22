@@ -1,9 +1,10 @@
-{
+require('dotenv').config();
+module.exports =  {
   "development": {
-    "username": "root",
-    "password": "root",
-    "database": "i4ias",
-    "host": "localhost",
+    "username": process.env.UNAME,
+    "password":process.env.PASSWORD,
+    "database": process.env.DATABASE,
+    "host": process.env.HOST,
     "dialect": "mysql"
   },
 

@@ -24,7 +24,7 @@ module.exports = {
         type: Sequelize.INTEGER,
         allowNull: false
       },
-      lastUpdatedAt:{
+      currentAffairsDate:{
         type: 'TIMESTAMP',
         allowNull: false
       },
