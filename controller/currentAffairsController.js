@@ -94,11 +94,24 @@ async function getCategoryType(req, res, next) {
     }
 }
 
+async function getCurrentAffairsNavigation(req, res, next) {
+    const { currentId, action } = req.body
+
+    let result = await currentAffairsRepo.getCurrentAffairsNavigationData(currentId, action)
+    if (result) {
+        response.successGet(res, result, "Current Affairs");
+    } else {
+        response.errorNotFound(res, "Current Affairs");
+    } 
+
+}
+
 module.exports = {
     createCurrentAffairs,
     getCurrentAffairs,
     getCurrentAffairsById,
     updateCurrentAffairs,
     deleteCurrentAffairs,
-    getCategoryType
+    getCategoryType,
+    getCurrentAffairsNavigation
 }

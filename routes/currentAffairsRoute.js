@@ -25,6 +25,9 @@ router.get('/getcategorytype',
 //middleware.token,
 controller.getCategoryType);
 
+router.post('/currentaffairsfornavigation',
+controller.getCurrentAffairsNavigation
 
+)
 
 module.exports = router;
