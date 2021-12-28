@@ -23,10 +23,9 @@ async function getCurrentAffairsDataById(currentAffairsId) {
     return result;
 }
 
-async function getCurrentAffairsData(where, limit, offset) {
+async function getCurrentAffairsData( limit, offset) {
     let result = await currentAffairs.findAndCountAll({
         attributes: ['id', 'description', 'tags', 'categoryType', 'userId', 'currentAffairsDate', 'createdAt', 'updatedAt'],
-        where: where,
         order: [
             ['createdAt', 'DESC'],
         ],
@@ -39,6 +38,23 @@ async function getCurrentAffairsData(where, limit, offset) {
         ],
         limit: limit,
         offset: offset,
+    })
+    return result;
+}
+
+async function getAllCurrentAffairsData() {
+    let result = await currentAffairs.findAll({
+        attributes: ['id', 'description', 'tags', 'categoryType', 'userId', 'currentAffairsDate', 'createdAt', 'updatedAt'],
+        order: [
+            ['createdAt', 'DESC'],
+        ],
+        include: [
+            {
+                model: user,
+                attributes: ['fname', 'lname', 'updated_at'],
+                as: 'user'
+            }
+        ]
     })
     return result;
 }
@@ -96,13 +112,25 @@ async function getCurrentAffairsNavigationData(currentId, action) {
 }
 
 
+async function searchByCondition(whereCondition)
+{
+
+    let result = await currentAffairs.findAll({
+        where : whereCondition
+    })
+    return result;
+
+}
+
+
 module.exports = {
     createCurrentAffairs,
     getCurrentAffairsData,
+    getAllCurrentAffairsData,
     updateCurrentAffairsData,
     deleteCurrentAffairsData,
     getCurrentAffairsDataById,
     getCategoryTypeData,
-    getCurrentAffairsNavigationData
-
+    getCurrentAffairsNavigationData,
+    searchByCondition
 };

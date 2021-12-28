@@ -9,9 +9,15 @@ router.get('/getcurrentaffairsbyid',
 //middleware.token,
 controller.getCurrentAffairsById);
 
-router.post('/getCurrentAffairs',
+//router.post('/getCurrentAffairs',
 //middleware.token,
-controller.getCurrentAffairs);
+//controller.getCurrentAffairs);
+
+router.get('/getallcurrentaffairs',
+//middleware.token,
+controller.getAllCurrentAffairs);
+
+
 
 router.post('/updatecurrentaffairs',
 controller.updateCurrentAffairs
@@ -27,7 +33,20 @@ controller.getCategoryType);
 
 router.post('/currentaffairsfornavigation',
 controller.getCurrentAffairsNavigation
-
 )
+
+router.get('/getcurrentaffairsbytag',
+controller.getCurrentAffairsByTag
+)
+
+router.get('/getcurrentaffairsbydate',
+controller.getCurrentAffairsByDate
+)
+
+router.get('/currentaffairs/downloadpdf',
+controller.downloadpdf
+)
+
+
 
 module.exports = router;
