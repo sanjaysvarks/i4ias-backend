@@ -56,7 +56,7 @@ async function getCurrentAffairs(req, res, next) {
 }
 
 async function getAllCurrentAffairs(req, res, next) {
-    
+
     let result = await currentAffairsRepo.getAllCurrentAffairsData();
     if (result) {
         response.successGet(res, result, "Current Affairs");
@@ -115,64 +115,92 @@ async function getCurrentAffairsNavigation(req, res, next) {
         response.successGet(res, result, "Current Affairs");
     } else {
         response.errorNotFound(res, "Current Affairs");
-    } 
+    }
 
 }
 
 async function getCurrentAffairsByTag(req, res, next) {
     const query = req.query.tag;
-    
+
     let whereCondition = {
         tags: {
             [Op.like]: '%' + query + '%'
-          }
+        }
     };
     let result = await currentAffairsRepo.searchByCondition(whereCondition)
     if (result) {
         response.successGet(res, result, "Current Affairs");
     } else {
         response.errorNotFound(res, "Current Affairs");
-    } 
+    }
 }
 
 async function getCurrentAffairsByDate(req, res, next) {
     const query = req.query.date;
-    
-   let where =  Sequelize.where(
-        Sequelize.literal('CONVERT(currentAffairs.currentAffairsDate, DATE)'),
-        { [Op.eq]:  query}
-   )
+    const categoryType = req.query.categoryType;
 
-    let result = await currentAffairsRepo.searchByCondition(where)
+    let where = Sequelize.where(
+        Sequelize.literal('CONVERT(currentAffairs.currentAffairsDate, DATE)'),
+        { [Op.eq]: query }
+    )
+    let conditionList = [where]
+
+    if (categoryType) {
+        conditionList.push(
+            {
+                categoryType: {
+                    [Op.eq]: categoryType
+                }
+            }
+        )
+    }
+
+    var condition =
+    {
+        [Op.and]: conditionList
+    }
+    let result = await currentAffairsRepo.searchByCondition(condition)
     if (result) {
         response.successGet(res, result, "Current Affairs");
     } else {
         response.errorNotFound(res, "Current Affairs");
-    } 
+    }
 }
+
+
 
 let downloadpdf = async (req, res, next) => {
     let currentAffairsId = req.query.id;
     let result = await currentAffairsRepo.getCurrentAffairsDataById(currentAffairsId)
     if (result && result.content) {
-       let options = {
-        "format": "A4",  
-        "height": "45mm",
-           header:{
-            "contents": '<div style="position:relative; top: -250px; font-size: 150px; color: grey; transform: rotate(-45deg);"/>dkjflkjsdflkjdsflkjsdkfbsdlkjfbsldkjbflksdj</div>'
-           }
-       };
-       pdf.create(result.content,options).toBuffer(function(err, buffer){
-        var filename = "sample.pdf";
-        var mimetype = mime.lookup(filename);
-      
-        res.setHeader('Content-disposition', 'attachment; filename=' + filename);
-        res.setHeader('Content-type', mimetype);
-        res.end(buffer)
-      });
+        let options = {
+            "format": "A4",
+            "height": "45mm",
+            header: {
+                "contents": '<div style="position:relative; top: -250px; font-size: 150px; color: grey; transform: rotate(-45deg);"/>dkjflkjsdflkjdsflkjsdkfbsdlkjfbsldkjbflksdj</div>'
+            }
+        };
+        pdf.create(result.content, options).toBuffer(function (err, buffer) {
+            var filename = "sample.pdf";
+            var mimetype = mime.lookup(filename);
+
+            res.setHeader('Content-disposition', 'attachment; filename=' + filename);
+            res.setHeader('Content-type', mimetype);
+            res.end(buffer)
+        });
     } else {
         response.end("Unable to download file");
-    } 
+    }
+}
+
+async function getDateForFolderName(req, res, next) {
+    let result = await currentAffairsRepo.getDateForFolderNameData()
+    console.log(result)
+    if (result) {
+        response.successGet(res, result, "Current Affairs");
+    } else {
+        response.errorNotFound(res, "Current Affairs");
+    }
 }
 
 
@@ -187,5 +215,6 @@ module.exports = {
     getCurrentAffairsNavigation,
     getCurrentAffairsByTag,
     getCurrentAffairsByDate,
-    downloadpdf
+    downloadpdf,
+    getDateForFolderName
 }

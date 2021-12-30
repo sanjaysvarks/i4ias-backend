@@ -3,7 +3,7 @@ const currentAffairs = db.currentAffairs
 const categoryType = db.categoryType
 const user = db.user;
 const Op = db.Sequelize.Op
-
+const Sequelize = db.Sequelize
 
 
 async function createCurrentAffairs(currentAffairsData) {
@@ -23,7 +23,7 @@ async function getCurrentAffairsDataById(currentAffairsId) {
     return result;
 }
 
-async function getCurrentAffairsData( limit, offset) {
+async function getCurrentAffairsData(limit, offset) {
     let result = await currentAffairs.findAndCountAll({
         attributes: ['id', 'description', 'tags', 'categoryType', 'userId', 'currentAffairsDate', 'createdAt', 'updatedAt'],
         order: [
@@ -92,7 +92,7 @@ async function getCurrentAffairsNavigationData(currentId, action) {
         }
         order = [
             ['id', 'ASC'],
-        ]    
+        ]
     }
     else {
         whereCondition = {
@@ -100,7 +100,7 @@ async function getCurrentAffairsNavigationData(currentId, action) {
         }
         order = [
             ['id', 'DESC'],
-        ]  
+        ]
     }
 
     let result = await currentAffairs.findOne({
@@ -112,16 +112,26 @@ async function getCurrentAffairsNavigationData(currentId, action) {
 }
 
 
-async function searchByCondition(whereCondition)
-{
+async function searchByCondition(whereCondition) {
 
     let result = await currentAffairs.findAll({
-        where : whereCondition
+        where: whereCondition
     })
     return result;
 
 }
 
+async function getDateForFolderNameData() {
+    let result = await currentAffairs.findAll({
+        attributes: [[Sequelize.fn('DISTINCT', Sequelize.literal('CONVERT(currentAffairsDate, DATE)')), 'currentAffairsDate']],
+        order: [
+            ['currentAffairsDate', 'DESC']
+        ],
+        limit : 30
+    })
+    return result;
+
+}
 
 module.exports = {
     createCurrentAffairs,
@@ -132,5 +142,6 @@ module.exports = {
     getCurrentAffairsDataById,
     getCategoryTypeData,
     getCurrentAffairsNavigationData,
-    searchByCondition
+    searchByCondition,
+    getDateForFolderNameData
 };
