@@ -38,6 +38,7 @@ function getCurrentAffairsNavigation(req, res, next) {
     const schema = Joi.object({
         currentId: Joi.number().required(),
         action: Joi.string().required(),
+        categoryType : Joi.string().allow('', null)
     })
     validate(schema.validate(req.body), res, next);
 }

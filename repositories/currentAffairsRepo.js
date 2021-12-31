@@ -81,7 +81,7 @@ async function getCategoryTypeData() {
     return result;
 }
 
-async function getCurrentAffairsNavigationData(currentId, action) {
+async function getCurrentAffairsNavigationData(currentId, action, categoryType) {
 
     let whereCondition = null;
     let order = null;
@@ -103,6 +103,12 @@ async function getCurrentAffairsNavigationData(currentId, action) {
         ]
     }
 
+    if (categoryType && categoryType != "") {
+        whereCondition.categoryType = {
+            [Op.eq]: categoryType
+        }
+    }
+
     let result = await currentAffairs.findOne({
         where: whereCondition,
         order: order
@@ -112,7 +118,7 @@ async function getCurrentAffairsNavigationData(currentId, action) {
 }
 
 
-async function getCurrentAffairsNavigationByTypenDate(currentAffDate,categorytype, action) {
+async function getCurrentAffairsNavigationByTypenDate(currentAffDate, categorytype, action) {
 
     let whereCondition = null;
     let order = null;
@@ -121,11 +127,11 @@ async function getCurrentAffairsNavigationByTypenDate(currentAffDate,categorytyp
         let where = Sequelize.where(
             Sequelize.literal('CONVERT(currentAffairs.currentAffairsDate, DATE)'),
             { [Op.gt]: currentAffDate }
-        ) 
+        )
 
         whereCondition = {
             where,
-            categoryType : categorytype
+            categoryType: categorytype
         }
         order = [
             ['currentAffairsDate', 'ASC'],
@@ -136,11 +142,11 @@ async function getCurrentAffairsNavigationByTypenDate(currentAffDate,categorytyp
         let where = Sequelize.where(
             Sequelize.literal('CONVERT(currentAffairs.currentAffairsDate, DATE)'),
             { [Op.lt]: currentAffDate }
-        ) 
+        )
 
         whereCondition = {
             where,
-            categoryType : categorytype
+            categoryType: categorytype
         }
         order = [
             ['currentAffairsDate', 'DESC'],
@@ -166,16 +172,16 @@ async function searchByCondition(whereCondition) {
 
 async function getDateForFolderNameData(categorytype) {
     let condition = {
-        categoryType : categorytype
+        categoryType: categorytype
     }
 
     let result = await currentAffairs.findAll({
         attributes: [[Sequelize.fn('DISTINCT', Sequelize.literal('CONVERT(currentAffairsDate, DATE)')), 'currentAffairsDate']],
-        where  : condition,
+        where: condition,
         order: [
             ['currentAffairsDate', 'DESC']
         ],
-        limit : 30
+        limit: 30
     })
     return result;
 

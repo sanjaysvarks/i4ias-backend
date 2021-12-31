@@ -108,9 +108,9 @@ async function getCategoryType(req, res, next) {
 }
 
 async function getCurrentAffairsNavigation(req, res, next) {
-    const { currentId, action } = req.body
+    const { currentId, action,categoryType } = req.body
 
-    let result = await currentAffairsRepo.getCurrentAffairsNavigationData(currentId, action)
+    let result = await currentAffairsRepo.getCurrentAffairsNavigationData(currentId, action,categoryType)
     if (result) {
         response.successGet(res, result, "Current Affairs");
     } else {
