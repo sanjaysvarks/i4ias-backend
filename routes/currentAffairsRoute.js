@@ -55,7 +55,7 @@ controller.getCurrentAffairsByDate
 )
 
 router.get('/currentaffairs/downloadpdf',
-middleware.token,
+//middleware.token,
 controller.downloadpdf
 )
 
