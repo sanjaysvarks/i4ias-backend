@@ -147,7 +147,7 @@ async function getCurrentAffairsNavigationByTypenDate(currentAffDate,categorytyp
         ]
     }
 
-    let result = await currentAffairs.findOne({
+    let result = await currentAffairs.findAll({
         where: whereCondition,
         order: order
     })

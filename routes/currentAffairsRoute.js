@@ -58,6 +58,10 @@ router.get('/getcurrentaffairsbydate',
 //middleware.token,
 controller.getCurrentAffairsByDate
 )
+router.get('/getCurrentAffairsbycatetorytype',
+//middleware.token,
+controller.getCurrentAffairsBycatetoryType
+)
 
 
 
