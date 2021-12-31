@@ -9,7 +9,7 @@ currentAffairsMiddleware.createCurrentAffairs,
 controller.createCurrentAffairs);
 
 router.get('/getcurrentaffairsbyid',
-middleware.token,
+//middleware.token,
 controller.getCurrentAffairsById);
 
 //router.post('/getCurrentAffairs',
@@ -17,7 +17,7 @@ controller.getCurrentAffairsById);
 //controller.getCurrentAffairs);
 
 router.get('/getallcurrentaffairs',
-middleware.token,
+///middleware.token,
 controller.getAllCurrentAffairs);
 
 
@@ -45,12 +45,12 @@ controller.getCurrentAffairsNavigation
 )
 
 router.get('/getcurrentaffairsbytag',
-middleware.token,
+//middleware.token,
 controller.getCurrentAffairsByTag
 )
 
 router.get('/getcurrentaffairsbydate',
-middleware.token,
+//middleware.token,
 controller.getCurrentAffairsByDate
 )
 
@@ -60,7 +60,7 @@ controller.downloadpdf
 )
 
 router.get('/getdateforfoldername',
-middleware.token,
+//middleware.token,
 controller.getDateForFolderName
 )
 
