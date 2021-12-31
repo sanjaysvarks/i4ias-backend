@@ -39,9 +39,14 @@ middleware.token,
 controller.getCategoryType);
 
 router.post('/currentaffairsfornavigation',
-middleware.token,
+//middleware.token,
 currentAffairsMiddleware.getCurrentAffairsNavigation,
 controller.getCurrentAffairsNavigation
+)
+
+router.post('/currentaffairsnavigationfortypedate',
+//middleware.token,
+controller.getCurrentAffairsNavigationByDatenType
 )
 
 router.get('/getcurrentaffairsbytag',
@@ -53,6 +58,8 @@ router.get('/getcurrentaffairsbydate',
 //middleware.token,
 controller.getCurrentAffairsByDate
 )
+
+
 
 router.get('/currentaffairs/downloadpdf',
 //middleware.token,

@@ -112,6 +112,49 @@ async function getCurrentAffairsNavigationData(currentId, action) {
 }
 
 
+async function getCurrentAffairsNavigationByTypenDate(currentAffDate,categorytype, action) {
+
+    let whereCondition = null;
+    let order = null;
+    if (action == 'next') {
+        console.log('action ', action)
+        let where = Sequelize.where(
+            Sequelize.literal('CONVERT(currentAffairs.currentAffairsDate, DATE)'),
+            { [Op.gt]: currentAffDate }
+        ) 
+
+        whereCondition = {
+            where,
+            categoryType : categorytype
+        }
+        order = [
+            ['currentAffairsDate', 'ASC'],
+        ]
+    }
+    else {
+
+        let where = Sequelize.where(
+            Sequelize.literal('CONVERT(currentAffairs.currentAffairsDate, DATE)'),
+            { [Op.lt]: currentAffDate }
+        ) 
+
+        whereCondition = {
+            where,
+            categoryType : categorytype
+        }
+        order = [
+            ['currentAffairsDate', 'DESC'],
+        ]
+    }
+
+    let result = await currentAffairs.findOne({
+        where: whereCondition,
+        order: order
+    })
+
+    return result;
+}
+
 async function searchByCondition(whereCondition) {
 
     let result = await currentAffairs.findAll({
@@ -121,9 +164,14 @@ async function searchByCondition(whereCondition) {
 
 }
 
-async function getDateForFolderNameData() {
+async function getDateForFolderNameData(categorytype) {
+    let condition = {
+        categoryType : categorytype
+    }
+
     let result = await currentAffairs.findAll({
         attributes: [[Sequelize.fn('DISTINCT', Sequelize.literal('CONVERT(currentAffairsDate, DATE)')), 'currentAffairsDate']],
+        where  : condition,
         order: [
             ['currentAffairsDate', 'DESC']
         ],
@@ -143,5 +191,6 @@ module.exports = {
     getCategoryTypeData,
     getCurrentAffairsNavigationData,
     searchByCondition,
-    getDateForFolderNameData
+    getDateForFolderNameData,
+    getCurrentAffairsNavigationByTypenDate
 };

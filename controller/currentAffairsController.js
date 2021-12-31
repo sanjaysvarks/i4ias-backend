@@ -119,6 +119,18 @@ async function getCurrentAffairsNavigation(req, res, next) {
 
 }
 
+async function getCurrentAffairsNavigationByDatenType(req, res, next) {
+    const { currentAffDate,categorytype, action } = req.body
+
+    let result = await currentAffairsRepo.getCurrentAffairsNavigationByTypenDate(currentAffDate,categorytype, action )
+    if (result) {
+        response.successGet(res, result, "Current Affairs");
+    } else {
+        response.errorNotFound(res, "Current Affairs");
+    }
+
+}
+
 async function getCurrentAffairsByTag(req, res, next) {
     const query = req.query.tag;
 
@@ -194,7 +206,8 @@ let downloadpdf = async (req, res, next) => {
 }
 
 async function getDateForFolderName(req, res, next) {
-    let result = await currentAffairsRepo.getDateForFolderNameData()
+    const categorytype  = req.query.categorytype 
+    let result = await currentAffairsRepo.getDateForFolderNameData(categorytype)
     console.log(result)
     if (result) {
         response.successGet(res, result, "Current Affairs");
@@ -216,5 +229,6 @@ module.exports = {
     getCurrentAffairsByTag,
     getCurrentAffairsByDate,
     downloadpdf,
-    getDateForFolderName
+    getDateForFolderName,
+    getCurrentAffairsNavigationByDatenType
 }
