@@ -152,8 +152,13 @@ async function getCurrentAffairsNavigationByTypenDate(currentAffDate, categoryty
             ['currentAffairsDate', 'DESC'],
         ]
     }
+   
 
     let result = await currentAffairs.findAll({
+        attributes: ['id', 'description', 
+                    'tags', 'categoryType', 
+                    'userId',[db.Sequelize.fn('DATE_FORMAT', db.Sequelize.col('currentAffairsDate'), '%b-%d-%Y'), 'currentAffairsDate'],
+                    'createdAt', 'updatedAt'],
         where: whereCondition,
         order: order
     })
