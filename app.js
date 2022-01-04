@@ -6,7 +6,7 @@ const route = require('./routes')
 
 app.use(cors());
 //app.use(bodyParser.json());
-app.use(bodyParser.json({limit: '20mb'}))
+app.use(bodyParser.json({limit: '50mb'}))
 app.use(bodyParser.urlencoded({
   extended: false
 }));
