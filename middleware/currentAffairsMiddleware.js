@@ -16,6 +16,7 @@ function createCurrentAffairs(req, res, next) {
 
 function updateCurrentAffairsData(req, res, next) {
     const schema = Joi.object({
+        id: Joi.number().required(),
         description: Joi.string().required(),
         content: Joi.string().required(),
         tags: Joi.string().required(),
