@@ -125,7 +125,7 @@ async function getCurrentAffairsNavigationByTypenDate(currentAffDate, categoryty
     if (action == 'next') {
         console.log('action ', action)
         let where = Sequelize.where(
-            Sequelize.literal('CONVERT(currentAffairs.currentAffairsDate, DATE)'),
+            Sequelize.literal('DATE_FORMAT(currentAffairsDate, "%b-%d-%Y")'),
             { [Op.gt]: currentAffDate }
         )
 
@@ -140,7 +140,7 @@ async function getCurrentAffairsNavigationByTypenDate(currentAffDate, categoryty
     else {
 
         let where = Sequelize.where(
-            Sequelize.literal('CONVERT(currentAffairs.currentAffairsDate, DATE)'),
+            Sequelize.literal('DATE_FORMAT(currentAffairsDate, "%b-%d-%Y")'),
             { [Op.lt]: currentAffDate }
         )
 
@@ -176,7 +176,7 @@ async function getDateForFolderNameData(categorytype) {
     }
 
     let result = await currentAffairs.findAll({
-        attributes: [[Sequelize.fn('DISTINCT', Sequelize.literal('CONVERT(currentAffairsDate, DATE)')), 'currentAffairsDate']],
+        attributes: [[Sequelize.fn('DISTINCT', Sequelize.literal('DATE_FORMAT(currentAffairsDate, "%b-%d-%Y")')), 'currentAffairsDate']],
         where: condition,
         order: [
             ['currentAffairsDate', 'DESC']

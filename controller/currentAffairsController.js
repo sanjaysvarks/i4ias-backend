@@ -150,9 +150,9 @@ async function getCurrentAffairsByTag(req, res, next) {
 async function getCurrentAffairsByDate(req, res, next) {
     const query = req.query.date;
     const categoryType = req.query.categoryType;
-
+   console.log(query);
     let where = Sequelize.where(
-        Sequelize.literal('CONVERT(currentAffairs.currentAffairsDate, DATE)'),
+        Sequelize.literal('DATE_FORMAT(currentAffairsDate, "%b-%d-%Y")'),
         { [Op.eq]: query }
     )
     let conditionList = [where]
