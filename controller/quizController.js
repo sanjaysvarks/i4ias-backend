@@ -63,7 +63,7 @@ async function updateQuiz(req, res, next) {
 
             let quizresult = await quizRepo.getQuizByNamerId(quiz,null)
             if (quizresult) {
-                response.errorValidation(res, "Quiz Name is already Exist Try with different name! ")
+                response.errorValidation(res, "Quiz Name already Exist, Try with a different name! ")
             }
             else {
                 let updateResult = await quizRepo.updateQuizData(quizId, updateInfo)
