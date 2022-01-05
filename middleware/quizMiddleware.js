@@ -3,7 +3,8 @@ const validate = require('./commonValidate')
 
 function createQuiz(req, res, next) {
     const schema = Joi.object({
-        quizname: Joi.string().required()
+        quizname: Joi.string().required(),
+        quizdate: Joi.date().required()
     })
     validate(schema.validate(req.body), res, next);
 }
@@ -11,7 +12,8 @@ function createQuiz(req, res, next) {
 function updateQuiz(req, res, next) {
     const schema = Joi.object({
         quizid: Joi.number().required(),
-        quizname: Joi.string().required()
+        quizname: Joi.string().required(),
+        quizdate: Joi.date().required()
     })
     validate(schema.validate(req.body), res, next);
 }

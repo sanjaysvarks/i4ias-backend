@@ -23,7 +23,8 @@ module.exports = {
       console.log("isverifed =========>", isVerified)
       if (isVerified) {
         //TODO get rid of unnescerry params
-        // req.headers.user = authService.decodeToken(token)
+        let userInfo = authService.decodeToken(token)
+        req.headers.userId = userInfo.id;
         next()
       } else {
         console.log("error3 ======>")

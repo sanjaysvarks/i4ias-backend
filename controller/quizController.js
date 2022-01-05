@@ -7,18 +7,26 @@ const Sequelize = db.Sequelize
 async function createQuiz(req, res, next) {
     try {
         const quiz = req.body.quizname
-
+        const quizdate = req.body.quizdate
+        const userid = req.headers.userId
         let quizName = {
-            quizName: quiz
+            quizName: quiz,
+            userId: userid,
+            quizDate: quizdate
         }
-        let quizData = await quizRepo.createQuiz(quizName)
-        if (quizData) {
-            response.successPost(res, quizData, "Quiz");
+        let result = await quizRepo.getQuizByNamerId(quiz)
+        if (result) {
+            response.errorValidation(res, "Quiz Name is already Exist! ")
         }
         else {
-            response.error(res)
+            let quizData = await quizRepo.createQuiz(quizName)
+            if (quizData) {
+                response.successPost(res, quizData, "Quiz");
+            }
+            else {
+                response.error(res)
+            }
         }
-
     } catch (error) {
         response.error(res)
     }
@@ -43,17 +51,35 @@ async function updateQuiz(req, res, next) {
     try {
         const quizId = req.body.quizid
         const quiz = req.body.quizname
-
+        const quizdate = req.body.quizdate
+        const userid = req.headers.userId
         let updateInfo = {
-            quizName: quiz
+            quizName: quiz,
+            quizDate: quizdate,
+            userId : userid
         }
-        let updateResult = await quizRepo.updateQuizData(quizId, updateInfo)
-        if (updateResult) {
-            response.success(res, "Updated Quiz successfully")
+        let result = await quizRepo.getQuizByNamerId(null,quizId)
+        if (result) {
+
+            let quizresult = await quizRepo.getQuizByNamerId(quiz,null)
+            if (quizresult) {
+                response.errorValidation(res, "Quiz Name is already Exist Try with different name! ")
+            }
+            else {
+                let updateResult = await quizRepo.updateQuizData(quizId, updateInfo)
+                if (updateResult) {
+                    response.success(res, "Updated Quiz successfully")
+                }
+                else {
+                    response.error(res);
+                }
+
+            }
         }
         else {
-            response.error(res);
+            response.error(res,'Quiz id Not Exist!');
         }
+
     } catch (error) {
         response.error(res)
     }

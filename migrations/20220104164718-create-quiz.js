@@ -11,6 +11,14 @@ module.exports = {
       quizName: {
         type: Sequelize.STRING
       },
+      userId: {
+        type: Sequelize.INTEGER,
+        allowNull: false
+      },
+      quizDate:{
+        type: 'TIMESTAMP',
+        allowNull: false
+      },
       createdAt: {
         type: 'TIMESTAMP',
         defaultValue: Sequelize.literal('CURRENT_TIMESTAMP'),

@@ -15,6 +15,13 @@ async function getQuizData(limit, offset) {
     const result = await quiz.findAndCountAll({
         order:
             [['createdAt', 'DESC']],
+            include: [
+                {
+                    model: user,
+                    attributes: ['fname', 'lname', 'updated_at'],
+                    as: 'user'
+                }
+            ]  ,  
         limit: limit,
         offset: offset
     })
@@ -42,9 +49,34 @@ async function deleteQuizData(quizIds) {
     return result;
 }
 
+async function getQuizByNamerId(quizname, quizid) {
+
+    var condition =
+    {
+        [Op.or]: [
+            {
+                quizName: {
+                    [Op.eq]: quizname
+                },
+            },
+            {
+                id: {
+                    [Op.eq]: quizid
+                }
+            }
+        ]
+    }
+    const result = await quiz.findOne({
+        where: condition
+    })
+    return result;
+}
+
+
 module.exports = {
     createQuiz,
     getQuizData,
     updateQuizData,
-    deleteQuizData
+    deleteQuizData,
+    getQuizByNamerId
 }

@@ -11,6 +11,13 @@ module.exports = (sequelize, DataTypes) => {
       allowNull: false,
       type: DataTypes.STRING
     },
+    userId: {
+      type: DataTypes.INTEGER,
+      allowNull: false
+    },
+    quizDate: {
+      type: DataTypes.DATE
+    },
     createdAt: {
       type: DataTypes.DATE,
       field: 'createdAt'
@@ -21,7 +28,12 @@ module.exports = (sequelize, DataTypes) => {
     }
   } ,{ freezeTableName: true });
   quiz.associate = function(models) {
-    // associations can be defined here
+    models.quiz.hasOne(models.user, {
+      foreignKey: 'id',
+      sourceKey: 'userId',
+      constraints: false,
+      as: 'user'
+    })
   };
   return quiz;
 };
