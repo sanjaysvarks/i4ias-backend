@@ -232,7 +232,7 @@ async function getDateForFolderName(req, res, next) {
 }
 
 async function getDataFromToDate(req, res, next) {
-    const { fromDate, toDate, limit, pageNo } = req.body;
+    const { fromDate, toDate } = req.body;
 
     let fromdate = Sequelize.where(
         Sequelize.literal('DATE_FORMAT(currentAffairsDate, "%d-%b-%Y")'),
@@ -250,7 +250,7 @@ async function getDataFromToDate(req, res, next) {
 
     }
 
-    let result = await currentAffairsRepo.getCurrentAffairsData(whereCondition, limit, pageNo)
+    let result = await currentAffairsRepo.getCurrentAffairsData(whereCondition)
     if (result) {
         response.successGet(res, result, "Current Affairs");
     } else {

@@ -23,9 +23,9 @@ async function getCurrentAffairsDataById(currentAffairsId) {
     return result;
 }
 
-async function getCurrentAffairsData(whereCondition, limit, pageNo) {
-    if (pageNo <= 0)
-        pageNo = 1
+async function getCurrentAffairsData(whereCondition) {
+   // if (pageNo <= 0)
+     //   pageNo = 1
     let result = await currentAffairs.findAndCountAll({
         attributes: ['id', 'description', 'tags', 'categoryType', 'userId', 'currentAffairsDate', 'createdAt', 'updatedAt'],
         where: whereCondition,
@@ -39,8 +39,8 @@ async function getCurrentAffairsData(whereCondition, limit, pageNo) {
                 as: 'user'
             }
         ],
-        limit: limit,
-        offset: (pageNo - 1) * limit,
+        //limit: limit,
+        //offset: (pageNo - 1) * limit,
     })
     return result;
 }
