@@ -23,11 +23,14 @@ async function getCurrentAffairsDataById(currentAffairsId) {
     return result;
 }
 
-async function getCurrentAffairsData(limit, offset) {
+async function getCurrentAffairsData(whereCondition, limit, pageNo) {
+    if (pageNo <= 0)
+        pageNo = 1
     let result = await currentAffairs.findAndCountAll({
         attributes: ['id', 'description', 'tags', 'categoryType', 'userId', 'currentAffairsDate', 'createdAt', 'updatedAt'],
+        where: whereCondition,
         order: [
-            ['createdAt', 'DESC'],
+            ['id', 'Asc'],
         ],
         include: [
             {
@@ -37,7 +40,7 @@ async function getCurrentAffairsData(limit, offset) {
             }
         ],
         limit: limit,
-        offset: offset,
+        offset: (pageNo - 1) * limit,
     })
     return result;
 }
@@ -125,7 +128,7 @@ async function getCurrentAffairsNavigationByTypenDate(currentAffDate, categoryty
     if (action == 'next') {
         console.log('action ', action)
         let where = Sequelize.where(
-            Sequelize.literal('DATE_FORMAT(currentAffairsDate, "%b-%d-%Y")'),
+            Sequelize.literal('DATE_FORMAT(currentAffairsDate, "%d-%b-%Y")'),
             { [Op.gt]: currentAffDate }
         )
 
@@ -140,7 +143,7 @@ async function getCurrentAffairsNavigationByTypenDate(currentAffDate, categoryty
     else {
 
         let where = Sequelize.where(
-            Sequelize.literal('DATE_FORMAT(currentAffairsDate, "%b-%d-%Y")'),
+            Sequelize.literal('DATE_FORMAT(currentAffairsDate, "%d-%b-%Y")'),
             { [Op.lt]: currentAffDate }
         )
 
@@ -152,13 +155,13 @@ async function getCurrentAffairsNavigationByTypenDate(currentAffDate, categoryty
             ['currentAffairsDate', 'DESC'],
         ]
     }
-   
+
 
     let result = await currentAffairs.findAll({
         attributes: ['id', 'description', 'content',
-                    'tags', 'categoryType', 
-                    'userId',[db.Sequelize.fn('DATE_FORMAT', db.Sequelize.col('currentAffairsDate'), '%b-%d-%Y'), 'currentAffairsDate'],
-                    'createdAt', 'updatedAt'],
+            'tags', 'categoryType',
+            'userId', [db.Sequelize.fn('DATE_FORMAT', db.Sequelize.col('currentAffairsDate'), '%d-%b-%Y'), 'currentAffairsDate'],
+            'createdAt', 'updatedAt'],
         where: whereCondition,
         order: order
     })
@@ -181,7 +184,7 @@ async function getDateForFolderNameData(categorytype) {
     }
 
     let result = await currentAffairs.findAll({
-        attributes: [[Sequelize.fn('DISTINCT', Sequelize.literal('DATE_FORMAT(currentAffairsDate, "%b-%d-%Y")')), 'currentAffairsDate']],
+        attributes: [[Sequelize.fn('DISTINCT', Sequelize.literal('DATE_FORMAT(currentAffairsDate, "%d-%b-%Y")')), 'currentAffairsDate']],
         where: condition,
         order: [
             ['currentAffairsDate', 'DESC']

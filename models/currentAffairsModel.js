@@ -12,7 +12,7 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.STRING
     },
     content: {
-      type: DataTypes.TEXT
+      type: DataTypes.TEXT('LONG')
     },
     tags: {
       type: DataTypes.STRING

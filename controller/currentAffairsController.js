@@ -44,16 +44,16 @@ async function getCurrentAffairsById(req, res, next) {
         response.errorNotFound(res, "Current Affairs");
     }
 }
-async function getCurrentAffairs(req, res, next) {
-    let { limit, pageNo } = req.body;
+// async function getCurrentAffairs(req, res, next) {
+//     let { limit, pageNo } = req.body;
 
-    let result = await currentAffairsRepo.getCurrentAffairsData(limit, limit * pageNo);
-    if (result) {
-        response.successGet(res, result, "Current Affairs");
-    } else {
-        response.errorNotFound(res, "Current Affairs");
-    }
-}
+//     let result = await currentAffairsRepo.getCurrentAffairsData(limit, limit * pageNo);
+//     if (result) {
+//         response.successGet(res, result, "Current Affairs");
+//     } else {
+//         response.error(res, "Current Affairs");
+//     }
+// }
 
 async function getAllCurrentAffairs(req, res, next) {
 
@@ -108,9 +108,9 @@ async function getCategoryType(req, res, next) {
 }
 
 async function getCurrentAffairsNavigation(req, res, next) {
-    const { currentId, action,categoryType } = req.body
+    const { currentId, action, categoryType } = req.body
 
-    let result = await currentAffairsRepo.getCurrentAffairsNavigationData(currentId, action,categoryType)
+    let result = await currentAffairsRepo.getCurrentAffairsNavigationData(currentId, action, categoryType)
     if (result) {
         response.successGet(res, result, "Current Affairs");
     } else {
@@ -120,9 +120,9 @@ async function getCurrentAffairsNavigation(req, res, next) {
 }
 
 async function getCurrentAffairsNavigationByDatenType(req, res, next) {
-    const { currentAffDate,categorytype, action } = req.body
+    const { currentAffDate, categorytype, action } = req.body
 
-    let result = await currentAffairsRepo.getCurrentAffairsNavigationByTypenDate(currentAffDate,categorytype, action )
+    let result = await currentAffairsRepo.getCurrentAffairsNavigationByTypenDate(currentAffDate, categorytype, action)
     if (result) {
         response.successGet(res, result, "Current Affairs");
     } else {
@@ -150,9 +150,8 @@ async function getCurrentAffairsByTag(req, res, next) {
 async function getCurrentAffairsByDate(req, res, next) {
     const query = req.query.date;
     const categoryType = req.query.categoryType;
-   console.log(query);
     let where = Sequelize.where(
-        Sequelize.literal('DATE_FORMAT(currentAffairsDate, "%b-%d-%Y")'),
+        Sequelize.literal('DATE_FORMAT(currentAffairsDate, "%d-%b-%Y")'),
         { [Op.eq]: query }
     )
     let conditionList = [where]
@@ -180,12 +179,12 @@ async function getCurrentAffairsByDate(req, res, next) {
 }
 
 async function getCurrentAffairsBycatetoryType(req, res, next) {
-    
+
     const categorytype = req.query.categorytype;
     whereCondition = {
-        categoryType : categorytype
+        categoryType: categorytype
     }
- 
+
     let result = await currentAffairsRepo.searchByCondition(whereCondition)
     if (result) {
         response.successGet(res, result, "Current Affairs");
@@ -222,7 +221,7 @@ let downloadpdf = async (req, res, next) => {
 }
 
 async function getDateForFolderName(req, res, next) {
-    const categorytype  = req.query.categorytype 
+    const categorytype = req.query.categorytype
     let result = await currentAffairsRepo.getDateForFolderNameData(categorytype)
     console.log(result)
     if (result) {
@@ -232,10 +231,37 @@ async function getDateForFolderName(req, res, next) {
     }
 }
 
+async function getDataFromToDate(req, res, next) {
+    const { fromDate, toDate, limit, pageNo } = req.body;
+
+    let fromdate = Sequelize.where(
+        Sequelize.literal('DATE_FORMAT(currentAffairsDate, "%d-%b-%Y")'),
+        { [Op.gte]: fromDate }
+    )
+
+    let todate = Sequelize.where(
+        Sequelize.literal('DATE_FORMAT(currentAffairsDate, "%d-%b-%Y")'),
+        { [Op.lte]: toDate }
+    )
+
+    let whereCondition = {
+        fromdate,
+        todate
+
+    }
+
+    let result = await currentAffairsRepo.getCurrentAffairsData(whereCondition, limit, pageNo)
+    if (result) {
+        response.successGet(res, result, "Current Affairs");
+    } else {
+        response.error(res, "Current Affairs");
+    }
+
+}
 
 module.exports = {
     createCurrentAffairs,
-    getCurrentAffairs,
+   // getCurrentAffairs,
     getAllCurrentAffairs,
     getCurrentAffairsById,
     updateCurrentAffairs,
@@ -247,5 +273,6 @@ module.exports = {
     downloadpdf,
     getDateForFolderName,
     getCurrentAffairsNavigationByDatenType,
-    getCurrentAffairsBycatetoryType
+    getCurrentAffairsBycatetoryType,
+    getDataFromToDate
 }

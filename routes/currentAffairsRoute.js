@@ -75,6 +75,10 @@ router.get('/getdateforfoldername',
 controller.getDateForFolderName
 )
 
+router.post('/getdatafromtodate',
+//middleware.token,
+controller.getDataFromToDate
+)
 
 
 
