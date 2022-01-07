@@ -27,7 +27,11 @@ async function getCurrentAffairsData(whereCondition) {
    // if (pageNo <= 0)
      //   pageNo = 1
     let result = await currentAffairs.findAndCountAll({
-        attributes: ['id', 'description', 'tags', 'categoryType', 'userId', 'currentAffairsDate', 'createdAt', 'updatedAt'],
+        attributes: ['id', 'description', 'tags', 
+                     'categoryType', 'userId', 
+                     [db.Sequelize.fn('DATE_FORMAT', db.Sequelize.col('currentAffairsDate'), '%d-%b-%Y'), 'currentAffairsDate'],
+                     [db.Sequelize.fn('DATE_FORMAT', db.Sequelize.col('createdAt'), '%d-%b-%Y'), 'createdAt'],
+                     [db.Sequelize.fn('DATE_FORMAT', db.Sequelize.col('updatedAt'), '%d-%b-%Y'), 'updatedAt']],
         where: whereCondition,
         order: [
             ['id', 'Asc'],
