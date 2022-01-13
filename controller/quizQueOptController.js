@@ -19,7 +19,7 @@ async function createQuizQueOpt(req, res, next) {
             solution: solution,
             userId: userId
         }
-
+        console.log('quizQuestion Payload',quizQuestionData)
         let questionResult = await quizQueOptRepo.createQuizQuestion(quizQuestionData)
         if (questionResult) {
             const quesOptList = [questionResult]

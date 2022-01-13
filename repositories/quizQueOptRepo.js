@@ -10,7 +10,9 @@ const Sequelize = db.Sequelize
 
 async function createQuizQuestion(quizQuestionData) {
     const result = await quizQuestion.create(quizQuestionData);
+    console.log('createQuizQuestion ',result)
     return result;
+
 }
 
 async function createQuizOption(quizOptionData) {
