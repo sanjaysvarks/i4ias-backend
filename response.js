@@ -30,8 +30,9 @@ module.exports = {
     });
   },
 
-  error: function (res, error = 'Something went wrong') {
+  error: function (res, error = 'Bad Request') {
     res.status(400).json({
+      status: 400,
       success: false,
       message: error
     });

@@ -33,7 +33,21 @@ module.exports = (sequelize, DataTypes) => {
       sourceKey: 'userId',
       constraints: false,
       as: 'user'
-    })
+    });
+
+    // models.quiz.hasMany(models.quizQuestion,{
+    //   foreignKey : 'quizId',
+    //   sourceKey: 'id',
+    //   as :'Questions'
+    // });
+
+    // models.quiz.hasMany(models.quizOptions,{
+    //   foreignKey : 'quizId',
+    //   sourceKey: 'id',
+    //  constraints: false,
+    //  as :'Options'
+    // });
+
   };
   return quiz;
 };
