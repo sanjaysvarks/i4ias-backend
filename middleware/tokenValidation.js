@@ -6,7 +6,6 @@ module.exports = {
 
   token: (req, res, next) => {
     let token = req.headers.authorization;
-    console.log('token req', req.headers)
     if (!token) {
       console.log("error1 ======>")
       response.errorUnauthorizedToken(res);

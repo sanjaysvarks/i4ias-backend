@@ -1,0 +1,116 @@
+1)Create Quiz 
+
+Url :- http://3.111.17.66:3000/createquiz
+Method :- post 
+Payload :-
+{
+    "quizname" : "TestQuiznew",
+    "quizdate" : "2021-11-22 12:33:29"
+}
+Response :- 
+{
+    "status": 201,
+    "success": true,
+    "message": "The Quiz was created successfully",
+    "data": {
+        "id": 4,
+        "quizName": "TestQuiz",
+        "userId": 1,
+        "quizDate": "2021-11-22T07:03:29.000Z",
+        "updatedAt": "2022-01-05T16:40:26.763Z",
+        "createdAt": "2022-01-05T16:40:26.763Z"
+    }
+}
+
+{
+    "status": 400,
+    "success": false,
+    "message": "Quiz Name is already Exist! "
+}
+
+2)Get Quiz data
+
+Url :- http://3.111.17.66:3000/getquiz
+Method :- post 
+Payload :-
+{
+    "limit": 2,
+    "offset" : 0
+}
+Response :- 
+{
+    "status": 200,
+    "success": true,
+    "message": "Quiz fetched successfully",
+    "data": {
+        "count": 4,
+        "rows": [
+            {
+                "id": 4,
+                "quizName": "TestQuiz",
+                "userId": 1,
+                "quizDate": "2021-11-22T07:03:29.000Z",
+                "createdAt": "2022-01-05T16:40:26.000Z",
+                "updatedAt": "2022-01-05T16:40:26.000Z",
+                "user": {
+                    "fname": "admin",
+                    "lname": " ",
+                    "updated_at": "2021-12-30T13:35:09.000Z"
+                }
+            },
+            {
+                "id": 3,
+                "quizName": "TestQuiznew4",
+                "userId": 1,
+                "quizDate": "2021-11-22T00:00:00.000Z",
+                "createdAt": "2022-01-05T16:39:51.000Z",
+                "updatedAt": "2022-01-05T16:39:51.000Z",
+                "user": {
+                    "fname": "admin",
+                    "lname": " ",
+                    "updated_at": "2021-12-30T13:35:09.000Z"
+                }
+            }
+        ]
+    }
+}
+
+3)Update Quiz data
+
+Url :- http://3.111.17.66:3000/updatequiz
+Method :- post 
+Payload :-
+{
+    "quizid" : 1,
+    "quizname" :"TestQuiznew2",
+    "quizdate" : "2021-11-22 12:33:29"
+}
+Response :- 
+{
+    "status": 200,
+    "success": true,
+    "data": "Updated Quiz successfully"
+}
+
+
+{
+    "status": 400,
+    "success": false,
+    "message": "Quiz Name is already Exist Try with different name! "
+}
+
+4)Delete Quiz Data
+
+
+Url :- http://3.111.17.66:3000/deletequiz
+Method :- post 
+Payload :-
+{
+    "quizIds" : [1,2]
+}
+Response :- 
+{
+    "status": 200,
+    "success": true,
+    "data": "Deleted Quiz successfully"
+}

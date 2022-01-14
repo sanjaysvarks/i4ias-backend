@@ -1,0 +1,622 @@
+Login api
+-----------
+Url :- http://3.111.17.66:3000/login
+Method :- Post
+Payload :-
+{
+     "email" :"admin@ifias.com",
+     "password" : "welcome"
+}
+Success Response :- 
+{
+    "status": 200,
+    "success": true,
+    "message": "Login Success",
+    "data": {
+        "id": 1,
+        "fName": "admin",
+        "lName": " ",
+        "email": "admin@ifias.com",
+        "phone": "9000000001",
+        "gender": "male",
+        "role": "admin",
+        "dob": "02/04/1998",
+        "address": "c n halli",
+        "pincode": "564342",
+        "city": "Bangalore",
+        "state": "karnataka",
+        "isActive": "Y",
+        "lastLogin": null,
+        "isEmailVerified": true,
+        "createdAt": "2021-12-22T19:11:19.000Z",
+        "updatedAt": "2021-12-22T19:11:19.000Z",
+        "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiZk5hbWUiOiJhZG1pbiIsImxOYW1lIjoiICIsImVtYWlsIjoiYWRtaW5AaWZpYXMuY29tIiwicGhvbmUiOiI5MDAwMDAwMDAxIiwiZ2VuZGVyIjoibWFsZSIsInJvbGUiOiJhZG1pbiIsImRvYiI6IjAyLzA0LzE5OTgiLCJhZGRyZXNzIjoiYyBuIGhhbGxpIiwicGluY29kZSI6IjU2NDM0MiIsImNpdHkiOiJCYW5nYWxvcmUiLCJzdGF0ZSI6Imthcm5hdGFrYSIsImlzQWN0aXZlIjoiWSIsImxhc3RMb2dpbiI6bnVsbCwiaXNFbWFpbFZlcmlmaWVkIjp0cnVlLCJjcmVhdGVkQXQiOiIyMDIxLTEyLTIyVDE5OjExOjE5LjAwMFoiLCJ1cGRhdGVkQXQiOiIyMDIxLTEyLTIyVDE5OjExOjE5LjAwMFoiLCJpYXQiOjE2NDAyMzU5ODF9.qtRkZBb_-38oIAZSdCastq9uDD4uafJsFExfpZVXT20"
+    }
+}
+Failure Response:-
+{
+    "success": false,
+    "message": "Invalid credentials"
+}
+
+2)category Dropdown
+Url :-  http://3.111.17.66:3000/getcategorytype
+Method :- get
+Payload :- No Payload
+Response :-
+{
+    "status": 200,
+    "success": true,
+    "message": "CategoryType fetched successfully",
+    "data": [
+        {
+            "id": 1,
+            "categoryName": "CA",
+            "createdAt": "2021-12-22T19:11:19.000Z",
+            "updatedAt": "2021-12-22T19:11:19.000Z"
+        },
+        {
+            "id": 2,
+            "categoryName": "Yojana",
+            "createdAt": "2021-12-22T19:11:19.000Z",
+            "updatedAt": "2021-12-22T19:11:19.000Z"
+        }
+    ]
+}
+3)Create CurrentAffairs
+Url :-  http://3.111.17.66:3000/createCurrentAffairs
+Method :- post
+Payload :-
+{
+    "description" : "Test Data New",
+    "content" :"Hey folks! <br> This is a rich <b>text field value new</b>",
+    "tags" : "kannada,english",
+    "categoryType" : "CA",
+    "userId" : 1,
+    "currentAffairsDate":"2021-11-23 18:03:29"
+}
+Response :-
+{
+    "status": 201,
+    "success": true,
+    "message": "The Current Affairs was created successfully",
+    "data": {
+        "id": 7,
+        "description": "Test Data New",
+        "content": "Hey folks! <br> This is a rich <b>text field value new</b>",
+        "tags": "kannada,english",
+        "categoryType": "CA",
+        "userId": 1,
+		"currentAffairsDate":"2021-11-23 18:03:29"
+        "updatedAt": "2021-12-23T05:11:35.773Z",
+        "createdAt": "2021-12-23T05:11:35.773Z"
+    }
+}
+4) Get CurrentAffairs By Id 
+Url :-  http://3.111.17.66:3000/getcurrentaffairsbyid?id=2
+Method :- Get 
+Payload :- No Payload
+Response :-
+{
+    "status": 200,
+    "success": true,
+    "message": "Current Affairs fetched successfully",
+    "data": {
+        "id": 2,
+        "description": "Test Data",
+        "content": "Hey folks! <br> This is a rich <b>text field value new</b>",
+        "tags": "kannada,english",
+        "categoryType": "CA",
+        "userId": 1,
+        "currentAffairsDate": null,
+        "createdAt": "2021-12-22T19:59:26.000Z",
+        "updatedAt": "2021-12-22T19:59:26.000Z"
+    }
+}
+5) getCurrentAffairs (To populate table in dashboard)
+Url :-  http://3.111.17.66:3000/getCurrentAffairs
+Method :- post 
+Payload :- 
+{
+    "categoryName":"CA",//optional
+    "limit":2,
+    "pageno":0
+}
+
+Response :-
+{
+    "status": 200,
+    "success": true,
+    "message": "Current Affairs fetched successfully",
+    "data": {
+        "count": 7,
+        "rows": [
+            {
+                "id": 6,
+                "description": "Test Data",
+                "content": "Hey folks! <br> This is a rich <b>text field value new</b>",
+                "tags": "kannada,english",
+                "categoryType": "CA",
+                "userId": 1,
+                "currentAffairsDate": null,
+                "createdAt": "2021-12-22T19:59:34.000Z",
+                "updatedAt": "2021-12-22T19:59:34.000Z",
+                "user": {
+                    "fname": "admin",
+                    "lname": " ",
+                    "updated_at": "2021-12-22T19:11:19.000Z"
+                }
+            },
+            {
+                "id": 5,
+                "description": "Test Data",
+                "content": "Hey folks! <br> This is a rich <b>text field value new</b>",
+                "tags": "kannada,english",
+                "categoryType": "CA",
+                "userId": 1,
+                "currentAffairsDate": null,
+                "createdAt": "2021-12-22T19:59:32.000Z",
+                "updatedAt": "2021-12-22T19:59:32.000Z",
+                "user": {
+                    "fname": "admin",
+                    "lname": " ",
+                    "updated_at": "2021-12-22T19:11:19.000Z"
+                }
+            }
+        ]
+    }
+}
+
+6) update CurrentAffairs Data
+
+Url :-  http://3.111.17.66:3000/updateCurrentAffairs
+Method :- post 
+Payload :- 
+{    "id": 4,
+    "description" : "Test Data updated",
+    "content" :"Hey folks! <br> This is a rich <b>text field value new</b>",
+    "tags" : "<kan> <eng>",
+    "categoryType" : "New",
+    "userId" : 1,
+    "currentAffairsDate":"2021-11-22 18:03:29"
+}
+Response :-
+{
+    "status": 200,
+    "success": true,
+    "data": "Updated Current affairs successfully"
+}
+
+7) Delete CurrentAffairs Data
+
+Url :-  http://3.111.17.66:3000/deletecurrentaffairs
+Method :- post 
+Payload :- 
+{
+    "currentAffairsIds" : [1,2]
+}
+Response :-
+{
+    "status": 200,
+    "success": true,
+    "data": "Deleted Current affairs successfully"
+}
+
+8) CurrentAffairs Data Navigation Api
+
+Url :-  http://3.111.17.66:3000/currentaffairsfornavigation
+Method :- post 
+Payload :- For Next Record 
+{
+    "currentId" : 3,
+    "action" : "next" 
+}
+Response :-
+{
+    "status": 200,
+    "success": true,
+    "message": "Current Affairs fetched successfully",
+    "data": {
+        "id": 4,
+        "description": "Test Data",
+        "content": "Hey folks! <br> This is a rich <b>text field value new</b>",
+        "tags": "kannada,english",
+        "categoryType": "CA",
+        "userId": 1,
+        "currentAffairsDate": null,
+        "createdAt": "2021-12-22T19:59:31.000Z",
+        "updatedAt": "2021-12-22T19:59:31.000Z"
+    }
+}
+
+Payload :- For previous Record 
+{
+    "currentId" : 4,
+    "action" : "prev" 
+}
+Response :-
+{
+    "status": 200,
+    "success": true,
+    "message": "Current Affairs fetched successfully",
+    "data": {
+        "id": 3,
+        "description": "Test Data",
+        "content": "Hey folks! <br> This is a rich <b>text field value new</b>",
+        "tags": "kannada,english",
+        "categoryType": "CA",
+        "userId": 1,
+        "currentAffairsDate": null,
+        "createdAt": "2021-12-22T19:59:29.000Z",
+        "updatedAt": "2021-12-22T19:59:29.000Z"
+    }
+}
+9) CurrentAffairs Data Search By Tag
+
+Url :-  http://3.111.17.66:3000/getcurrentaffairsbytag?tag=kannada
+Method :- get 
+Payload :- No Payload
+
+Response :-
+{
+    "status": 200,
+    "success": true,
+    "message": "Current Affairs fetched successfully",
+    "data": [
+        {
+            "id": 3,
+            "description": "Test Data",
+            "content": "Hey folks! <br> This is a rich <b>text field value new</b>",
+            "tags": "kannada,english",
+            "categoryType": "CA",
+            "userId": 1,
+            "currentAffairsDate": null,
+            "createdAt": "2021-12-22T19:59:29.000Z",
+            "updatedAt": "2021-12-22T19:59:29.000Z"
+        },
+        {
+            "id": 6,
+            "description": "Test Data",
+            "content": "Hey folks! <br> This is a rich <b>text field value new</b>",
+            "tags": "kannada,english",
+            "categoryType": "CA",
+            "userId": 1,
+            "currentAffairsDate": null,
+            "createdAt": "2021-12-22T19:59:34.000Z",
+            "updatedAt": "2021-12-22T19:59:34.000Z"
+        },
+        {
+            "id": 8,
+            "description": "Test Data New - 2021",
+            "content": "Hey folks! <br> This is a rich <b>text field value new</b>",
+            "tags": "kannada,english",
+            "categoryType": "CA",
+            "userId": 1,
+            "currentAffairsDate": null,
+            "createdAt": "2021-12-23T09:36:49.000Z",
+            "updatedAt": "2021-12-23T09:36:49.000Z"
+        },
+        {
+            "id": 9,
+            "description": "Test Data New - 2021-12",
+            "content": "Hey folks! <br> This is a rich <b>text field value new</b>",
+            "tags": "kannada,english",
+            "categoryType": "CA",
+            "userId": 1,
+            "currentAffairsDate": null,
+            "createdAt": "2021-12-23T09:41:06.000Z",
+            "updatedAt": "2021-12-23T09:41:06.000Z"
+        },
+        {
+            "id": 10,
+            "description": "Test Data 1",
+            "content": "<p>Hey Folks!<br><strong>hello</strong></p>",
+            "tags": "kannada,english",
+            "categoryType": "CA",
+            "userId": 1,
+            "currentAffairsDate": null,
+            "createdAt": "2021-12-23T20:11:56.000Z",
+            "updatedAt": "2021-12-23T20:11:56.000Z"
+        },
+        {
+            "id": 25,
+            "description": "Test Data New - 2021-12",
+            "content": "Hey folks! <br> This is a rich <b>text field value new</b>",
+            "tags": "kannada,english",
+            "categoryType": "CA",
+            "userId": 1,
+            "currentAffairsDate": null,
+            "createdAt": "2021-12-27T17:21:13.000Z",
+            "updatedAt": "2021-12-27T17:21:13.000Z"
+        }
+    ]
+}
+
+10) CurrentAffairs Data Search By Date
+Url :-  http://3.111.17.66:3000/getCurrentAffairsByDate?date=2021-11-22
+Method :- get 
+Payload :- No Payload
+
+Response :-
+{
+    "status": 200,
+    "success": true,
+    "message": "Current Affairs fetched successfully",
+    "data": [
+        {
+            "id": 4,
+            "description": "Test Data updated",
+            "content": "Hey folks! <br> This is a rich <b>text field value new</b>",
+            "tags": "<kan> <eng>",
+            "categoryType": "New",
+            "userId": 1,
+            "currentAffairsDate": "2021-11-22T18:03:29.000Z",
+            "createdAt": "2021-12-22T19:59:31.000Z",
+            "updatedAt": "2021-12-27T19:39:06.000Z"
+        }
+    ]
+}
+
+11) Get all CurrentAffairs Data
+Url :-  http://3.111.17.66:3000/getallcurrentaffairs
+Method :- get 
+Payload :- No Payload
+Response :-
+{
+    "status": 200,
+    "success": true,
+    "message": "Current Affairs fetched successfully",
+    "data": [
+        {
+            "id": 30,
+            "description": "testdata10",
+            "tags": "english",
+            "categoryType": "CA",
+            "userId": 1,
+            "currentAffairsDate": "2021-12-23T18:49:50.000Z",
+            "createdAt": "2021-12-28T07:47:34.000Z",
+            "updatedAt": "2021-12-28T13:21:32.000Z",
+            "user": {
+                "fname": "admin",
+                "lname": " ",
+                "updated_at": "2021-12-22T19:11:19.000Z"
+            }
+        },
+        {
+            "id": 29,
+            "description": "test2",
+            "tags": "english, kannada",
+            "categoryType": "CA",
+            "userId": 1,
+            "currentAffairsDate": "2021-12-28T13:17:04.000Z",
+            "createdAt": "2021-12-28T07:47:04.000Z",
+            "updatedAt": "2021-12-28T13:21:08.000Z",
+            "user": {
+                "fname": "admin",
+                "lname": " ",
+                "updated_at": "2021-12-22T19:11:19.000Z"
+            }
+        }
+    ]
+}
+12)Download Pdf 
+Url :-  http://3.111.17.66:3000/currentaffairs/downloadpdf?id=34
+Method :- get 
+Response :- File Download
+
+13)get unique dates for folder names 
+
+Url :- http://3.111.17.66:3000/getdateforfoldername
+Method :- get 
+Response :- 
+{
+    "status": 200,
+    "success": true,
+    "message": "Current Affairs fetched successfully",
+    "data": [
+        {
+            "currentAffairsDate": "2021-12-28"
+        }
+    ]
+}
+14)Get currentAffairs by  date and categoryType
+
+Url :- http://localhost:3000/getCurrentAffairsByDate?date=2021-12-27&categoryType=CA
+Method :- get 
+Response :- 
+{
+    "status": 200,
+    "success": true,
+    "message": "Current Affairs fetched successfully",
+    "data": [
+        {
+            "id": 4,
+            "description": "Test Data New - 2021-28",
+            "content": "Hey folks! <br> This is a rich <b>text field value new</b>",
+            "tags": "kannada,english",
+            "categoryType": "CA",
+            "userId": 1,
+            "currentAffairsDate": "2021-12-27T12:00:24.000Z",
+            "createdAt": "2021-12-30T16:36:18.000Z",
+            "updatedAt": "2021-12-30T16:36:18.000Z"
+        },
+        {
+            "id": 5,
+            "description": "Test Data New - 2021-28",
+            "content": "Hey folks! <br> This is a rich <b>text field value new</b>",
+            "tags": "kannada,english",
+            "categoryType": "CA",
+            "userId": 1,
+            "currentAffairsDate": "2021-12-27T12:00:24.000Z",
+            "createdAt": "2021-12-30T16:36:20.000Z",
+            "updatedAt": "2021-12-30T16:36:20.000Z"
+        },
+        {
+            "id": 6,
+            "description": "Test Data New - 2021-28",
+            "content": "Hey folks! <br> This is a rich <b>text field value new</b>",
+            "tags": "kannada,english",
+            "categoryType": "CA",
+            "userId": 1,
+            "currentAffairsDate": "2021-12-27T12:00:24.000Z",
+            "createdAt": "2021-12-30T16:36:22.000Z",
+            "updatedAt": "2021-12-30T16:36:22.000Z"
+        },
+        {
+            "id": 7,
+            "description": "Test Data New - 2021-28",
+            "content": "Hey folks! <br> This is a rich <b>text field value new</b>",
+            "tags": "kannada,english",
+            "categoryType": "CA",
+            "userId": 1,
+            "currentAffairsDate": "2021-12-27T12:00:24.000Z",
+            "createdAt": "2021-12-30T16:51:14.000Z",
+            "updatedAt": "2021-12-30T16:51:14.000Z"
+        },
+        {
+            "id": 8,
+            "description": "Test Data New - 2021-28",
+            "content": "Hey folks! <br> This is a rich <b>text field value new</b>",
+            "tags": "kannada,english",
+            "categoryType": "CA",
+            "userId": 1,
+            "currentAffairsDate": "2021-12-27T12:00:24.000Z",
+            "createdAt": "2021-12-30T16:52:23.000Z",
+            "updatedAt": "2021-12-30T16:52:23.000Z"
+        }
+    ]
+}
+15)Get currentAffairs by  date
+
+Url :- http://localhost:3000/getCurrentAffairsByDate?date=2021-12-27
+Method :- get 
+Response :- 
+{
+    "status": 200,
+    "success": true,
+    "message": "Current Affairs fetched successfully",
+    "data": [
+        {
+            "id": 4,
+            "description": "Test Data New - 2021-28",
+            "content": "Hey folks! <br> This is a rich <b>text field value new</b>",
+            "tags": "kannada,english",
+            "categoryType": "CA",
+            "userId": 1,
+            "currentAffairsDate": "2021-12-27T12:00:24.000Z",
+            "createdAt": "2021-12-30T16:36:18.000Z",
+            "updatedAt": "2021-12-30T16:36:18.000Z"
+        },
+        {
+            "id": 5,
+            "description": "Test Data New - 2021-28",
+            "content": "Hey folks! <br> This is a rich <b>text field value new</b>",
+            "tags": "kannada,english",
+            "categoryType": "CA",
+            "userId": 1,
+            "currentAffairsDate": "2021-12-27T12:00:24.000Z",
+            "createdAt": "2021-12-30T16:36:20.000Z",
+            "updatedAt": "2021-12-30T16:36:20.000Z"
+        },
+        {
+            "id": 6,
+            "description": "Test Data New - 2021-28",
+            "content": "Hey folks! <br> This is a rich <b>text field value new</b>",
+            "tags": "kannada,english",
+            "categoryType": "CA",
+            "userId": 1,
+            "currentAffairsDate": "2021-12-27T12:00:24.000Z",
+            "createdAt": "2021-12-30T16:36:22.000Z",
+            "updatedAt": "2021-12-30T16:36:22.000Z"
+        },
+        {
+            "id": 7,
+            "description": "Test Data New - 2021-28",
+            "content": "Hey folks! <br> This is a rich <b>text field value new</b>",
+            "tags": "kannada,english",
+            "categoryType": "CA",
+            "userId": 1,
+            "currentAffairsDate": "2021-12-27T12:00:24.000Z",
+            "createdAt": "2021-12-30T16:51:14.000Z",
+            "updatedAt": "2021-12-30T16:51:14.000Z"
+        },
+        {
+            "id": 8,
+            "description": "Test Data New - 2021-28",
+            "content": "Hey folks! <br> This is a rich <b>text field value new</b>",
+            "tags": "kannada,english",
+            "categoryType": "CA",
+            "userId": 1,
+            "currentAffairsDate": "2021-12-27T12:00:24.000Z",
+            "createdAt": "2021-12-30T16:52:23.000Z",
+            "updatedAt": "2021-12-30T16:52:23.000Z"
+        }
+    ]
+}
+
+16)Get currentAffairs by  from date and to date 
+Url :-  http://3.111.17.66:3000/getdatafromtodate
+Method :- post
+Payload :-
+{
+    "fromDate": "01-Jan-2021",
+    "toDate":"06-Jan-2022",
+    "limit": 3,
+    "pageNo":0
+}
+Response :-
+{
+    "status": 200,
+    "success": true,
+    "message": "Current Affairs fetched successfully",
+    "data": {
+        "count": 10,
+        "rows": [
+            {
+                "id": 22,
+                "description": "Rytu Bharosa Scheme - Andhra Pradesh",
+                "tags": "GS-2, Welfare schemes",
+                "categoryType": "CA",
+                "userId": 1,
+                "currentAffairsDate": "2022-01-05T12:05:29.000Z",
+                "createdAt": "2022-01-06T06:35:30.000Z",
+                "updatedAt": "2022-01-06T06:35:30.000Z",
+                "user": {
+                    "fname": "admin",
+                    "lname": " ",
+                    "updated_at": "2021-12-22T19:11:19.000Z"
+                }
+            },
+            {
+                "id": 23,
+                "description": "Sri Lanka Cabinet clears oil tank deal",
+                "tags": "GS-2,International Relations",
+                "categoryType": "CA",
+                "userId": 1,
+                "currentAffairsDate": "2022-01-05T12:06:43.000Z",
+                "createdAt": "2022-01-06T06:36:44.000Z",
+                "updatedAt": "2022-01-06T06:36:44.000Z",
+                "user": {
+                    "fname": "admin",
+                    "lname": " ",
+                    "updated_at": "2021-12-22T19:11:19.000Z"
+                }
+            },
+            {
+                "id": 24,
+                "description": "United Nations World Food Program",
+                "tags": "GS-2,GS-3,Poverty,Inclusive growth",
+                "categoryType": "CA",
+                "userId": 1,
+                "currentAffairsDate": "2022-01-05T12:08:10.000Z",
+                "createdAt": "2022-01-06T06:38:11.000Z",
+                "updatedAt": "2022-01-06T06:38:11.000Z",
+                "user": {
+                    "fname": "admin",
+                    "lname": " ",
+                    "updated_at": "2021-12-22T19:11:19.000Z"
+                }
+            }
+        ]
+    }
+}

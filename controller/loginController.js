@@ -24,7 +24,6 @@ let login = async (req, res, next) => {
             response.error(res, "Invalid credentials")
         }
     } catch (error) {
-        console.log('error', error)
         response.error(res)
     }
 

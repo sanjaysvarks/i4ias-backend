@@ -14,4 +14,21 @@ router.get('/getQuestionAndOpt',
 //quizQueOptMiddleware.,
 controller.getQuestionAndOpt);
 
+router.post('/updateQuestions',
+controller.updateQuestions
+)
+
+router.post('/updateOptions',
+controller.updateOptions
+)
+
+router.post('/deleteQuestions',
+controller.deleteQuestions
+)
+
+router.post('/deleteOptions',
+controller.deleteOptions
+)
+
+
 module.exports = router;

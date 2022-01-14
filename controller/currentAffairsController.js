@@ -88,7 +88,7 @@ async function updateCurrentAffairs(req, res, next) {
 
 async function deleteCurrentAffairs(req, res, next) {
     const ids = req.body.currentAffairsIds
-    let result = currentAffairsRepo.deleteCurrentAffairsData(ids)
+    let result = await  currentAffairsRepo.deleteCurrentAffairsData(ids)
     if (result) {
         response.success(res, "Deleted Current affairs successfully")
     }
@@ -223,7 +223,6 @@ let downloadpdf = async (req, res, next) => {
 async function getDateForFolderName(req, res, next) {
     const categorytype = req.query.categorytype
     let result = await currentAffairsRepo.getDateForFolderNameData(categorytype)
-    console.log(result)
     if (result) {
         response.successGet(res, result, "Current Affairs");
     } else {
