@@ -45,6 +45,7 @@ async function createQuizQueOpt(req, res, next) {
             response.error(res, 'Question Not Created Please Check the Data! ')
         }
     } catch (error) {
+        console.log('error',error)
         response.error(res)
     }
 }
