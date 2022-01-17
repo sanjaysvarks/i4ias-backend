@@ -8,7 +8,7 @@ middleware.token,
 quizMiddleware.createQuiz,
 controller.createQuiz);
 
-router.post('/getquiz',
+router.get('/getquiz',
 //middleware.token,
 //quizMiddleware.createQuiz,
 controller.getQuiz);

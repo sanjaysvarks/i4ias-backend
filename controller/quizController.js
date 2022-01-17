@@ -35,9 +35,9 @@ async function createQuiz(req, res, next) {
 
 async function getQuiz(req, res, next) {
     try {
-        let { limit, offset } = req.body;
+       // let { limit, offset } = req.body;
 
-        let result = await quizRepo.getQuizData(limit, offset);
+        let result = await quizRepo.getQuizData();
         if (result) {
             response.successGet(res, result, "Quiz");
         } else {

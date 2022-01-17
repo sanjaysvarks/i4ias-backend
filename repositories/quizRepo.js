@@ -11,7 +11,7 @@ async function createQuiz(quizData) {
     return result;
 }
 
-async function getQuizData(limit, offset) {
+async function getQuizData() {
     const result = await quiz.findAndCountAll({
         order:
             [['createdAt', 'DESC']],
@@ -21,9 +21,9 @@ async function getQuizData(limit, offset) {
                     attributes: ['fname', 'lname', 'updated_at'],
                     as: 'user'
                 }
-            ]  ,  
-        limit: limit,
-        offset: offset
+            ]  
+       // limit: limit,
+        //offset: offset
     })
     return result
 }
