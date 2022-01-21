@@ -1,6 +1,6 @@
 const response = require('../response')
 const quizRepo = require('../repositories/quizRepo')
-const quizQueOptRepo = require('../repositories/quizQueOptRepo')
+const questionRepo = require('../repositories/questionRepo')
 const db = require('../models/index')
 const Op = db.Sequelize.Op
 const Sequelize = db.Sequelize
@@ -29,6 +29,7 @@ async function createQuiz(req, res, next) {
             }
         }
     } catch (error) {
+        console.log(error)
         response.error(res)
     }
 }
@@ -89,8 +90,7 @@ async function updateQuiz(req, res, next) {
 async function deleteQuiz(req, res, next) {
     try {
         const ids = req.body.quizIds
-        await quizQueOptRepo.deleteOptions({quizId : ids})
-        await quizQueOptRepo.deleteQuestions({quizId : ids})
+        await questionRepo.deleteQuestions({quizId : ids})
         let result = await quizRepo.deleteQuizData(ids)
         if (result) {
             response.success(res, "Deleted Quiz successfully")

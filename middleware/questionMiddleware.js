@@ -5,7 +5,7 @@ const validate = require('./commonValidate')
 function createQuizQueOpt(req,res,next){
     const schema = Joi.object({
         categoryTypeId: Joi.number().required(),
-        tags: Joi.string().required(),
+        tags: Joi.string(),
         quizId: Joi.number().required(),
         questionContent: Joi.string().required(),
         answer:Joi.string().required(),
@@ -38,6 +38,10 @@ function updateOptions(req, res, next){
         seqno:Joi.number().required()
     })
     validate(schema.validate(req.body), res, next); 
+}
+
+function updateQuestionAndOption(req,res,next){
+    
 }
 
 function deleteQuestions(req, res, next) {

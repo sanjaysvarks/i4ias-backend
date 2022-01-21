@@ -1,6 +1,6 @@
 'use strict';
 module.exports = (sequelize, DataTypes) => {
-  const quizQuestion = sequelize.define('quizQuestion', {
+  const question = sequelize.define('questions', {
     id: {
       allowNull: false,
       autoIncrement: true,
@@ -22,11 +22,27 @@ module.exports = (sequelize, DataTypes) => {
       allowNull: false,
       type: DataTypes.TEXT('LONG')
     },
+    optionA: {
+      allowNull: false,
+      type: DataTypes.TEXT('LONG')
+    },
+    optionB: {
+      allowNull: false,
+      type: DataTypes.TEXT('LONG')
+    },
+    optionC: {
+      allowNull: false,
+      type: DataTypes.TEXT('LONG')
+    },
+    optionD: {
+      allowNull: false,
+      type: DataTypes.TEXT('LONG')
+    },
     answer: {
       allowNull: false,
       type: DataTypes.STRING
     },
-    solution: {
+    ansDescription: {
       type: DataTypes.TEXT('LONG')
     },
     userId: {
@@ -42,20 +58,9 @@ module.exports = (sequelize, DataTypes) => {
       field: 'updatedAt'
     }
   }, {});
-  quizQuestion.associate = function (models) {
-    // associations can be defined here
-    models.quizQuestion.hasMany(models.quizOptions,{
-      foreignKey: 'quizQuestionId',
-      sourceKey: 'id',
-      as : 'Options'
-    }) 
-
-    // models.quizQuestion.belongsTo(models.quiz, {
-    //   foreignKey: 'quizId',
-    //   as : 'Questions'
-    // });
+  question.associate = function (models) {
 
     
   };
-  return quizQuestion;
+  return question;
 };
