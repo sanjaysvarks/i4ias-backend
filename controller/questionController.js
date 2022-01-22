@@ -26,14 +26,13 @@ async function createQuestion(req, res, next) {
         let questionResult = await questionRepo.createQuestion(questionData)
        
         if (questionResult) {
-            response.successPost(res, questionResult, "Question and Options ");
+            response.successPost(res, questionResult, "Questions and Options ");
         }
         else {
             response.error(res, 'Question and Oprions Not Created Please Check the Data! ')
         }
     } catch (error) {
         response.error(res)
-        console.log(error)
     }
 }
 
@@ -53,6 +52,7 @@ async function getQuestion(req, res, next) {
 async function updateQuestions(req, res, next) {
     try {
         const { id, categoryTypeId, tags, quizId, questionContent, optionA, optionB, optionC, optionD, answer, ansDescription } = req.body
+        const userId = req.headers.userId
         let questionData = {
             categoryTypeId: categoryTypeId,
             tags: tags,
@@ -79,11 +79,9 @@ async function updateQuestions(req, res, next) {
         }
 
     } catch (error) {
-        response.error(res);
-
+        response.error(res)
     }
 }
-
 
 async function deleteQuestions(req, res, next) {
     try {

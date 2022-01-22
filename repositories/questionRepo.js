@@ -8,8 +8,7 @@ const Sequelize = db.Sequelize
 
 
 async function createQuestion(questionData) {
-    const result = await question.create(questionData);
-    console.log('result---->',result)
+    const result = await question.bulkCreate(questionData);
     return result;
 }
 
