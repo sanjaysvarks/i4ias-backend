@@ -6,25 +6,8 @@ const db = require('../models/index')
 
 async function createQuestion(req, res, next) {
     try {
-        const { categoryTypeId, tags, quizId, questionContent, optionA, optionB, optionC, optionD, answer, ansDescription } = req.body
-        const userId = req.headers.userId
-
-        let questionData = {
-            categoryTypeId: categoryTypeId,
-            tags: tags,
-            quizId: quizId,
-            questionContent: questionContent,
-            optionA: optionA,
-            optionB: optionB,
-            optionC: optionC,
-            optionD: optionD,
-            answer: answer,
-            ansDescription: ansDescription,
-            userId: userId
-        }
-
-        let questionResult = await questionRepo.createQuestion(questionData)
-       
+        const { questionList } = req.body
+        let questionResult = await questionRepo.createQuestion(questionList)
         if (questionResult) {
             response.successPost(res, questionResult, "Questions and Options ");
         }
@@ -98,8 +81,6 @@ async function deleteQuestions(req, res, next) {
         response.error(res);
     }
 }
-
-
 
 
 module.exports = {
