@@ -1,0 +1,222 @@
+Quiz Question and Option Apis 
+--------------------------------
+
+1)Create Quiz Question and Options
+
+Url :- http://65.2.42.25:3000/createQuestion
+Method :- post 
+Payload :- {
+    "questionList" : [
+                            {
+                            "categoryTypeId" : 1,
+                            "tags": "tags",
+                            "quizId": 1,
+                            "questionContent": "test data 22-2022 ",
+                            "optionA": "optionA",
+                            "optionB": "optionB",
+                            "optionC": "optionC",
+                            "optionD": "optionD",
+                            "answer": "answer",
+                            "ansDescription": "dis",
+                            "userId": 1
+                            }
+                      ]
+}
+
+Response:
+
+{
+    "status": 201,
+    "success": true,
+    "message": "The Questions and Options  was created successfully",
+    "data": [
+        {
+            "id": 3,
+            "categoryTypeId": 1,
+            "tags": "tags",
+            "quizId": 1,
+            "questionContent": "test data 22-2022 ",
+            "optionA": "optionA",
+            "optionB": "optionB",
+            "optionC": "optionC",
+            "optionD": "optionD",
+            "answer": "answer",
+            "ansDescription": "dis",
+            "userId": 1,
+            "createdAt": "2022-01-22T13:36:03.663Z",
+            "updatedAt": "2022-01-22T13:36:03.663Z"
+        }
+    ]
+}
+
+same api is work for Mutipal Question Upload 
+---------------------------------------------
+Payload:- {
+    "questionList" : [
+                            {
+                            "categoryTypeId" : 1,
+                            "tags": "tags",
+                            "quizId": 1,
+                            "questionContent": "test data 22-2022 ",
+                            "optionA": "optionA",
+                            "optionB": "optionB",
+                            "optionC": "optionC",
+                            "optionD": "optionD",
+                            "answer": "answer",
+                            "ansDescription": "dis",
+                            "userId": 1
+                            },
+                            {
+                            "categoryTypeId" : 2,
+                            "tags": "tags",
+                            "quizId": 1,
+                            "questionContent": "test data 22 2022 ",
+                            "optionA": "optionA",
+                            "optionB": "optionB",
+                            "optionC": "optionC",
+                            "optionD": "optionD",
+                            "answer": "answer",
+                            "ansDescription": "dis",
+                            "userId": 1
+                            }
+                      ]
+}
+
+
+Response
+-----------
+
+{
+    "status": 201,
+    "success": true,
+    "message": "The Questions and Options  was created successfully",
+    "data": [
+        {
+            "id": 4,
+            "categoryTypeId": 1,
+            "tags": "tags",
+            "quizId": 1,
+            "questionContent": "test data 22-2022 ",
+            "optionA": "optionA",
+            "optionB": "optionB",
+            "optionC": "optionC",
+            "optionD": "optionD",
+            "answer": "answer",
+            "ansDescription": "dis",
+            "userId": 1,
+            "createdAt": "2022-01-22T14:17:55.611Z",
+            "updatedAt": "2022-01-22T14:17:55.611Z"
+        },
+        {
+            "id": 5,
+            "categoryTypeId": 2,
+            "tags": "tags",
+            "quizId": 1,
+            "questionContent": "test data 22 2022 ",
+            "optionA": "optionA",
+            "optionB": "optionB",
+            "optionC": "optionC",
+            "optionD": "optionD",
+            "answer": "answer",
+            "ansDescription": "dis",
+            "userId": 1,
+            "createdAt": "2022-01-22T14:17:55.611Z",
+            "updatedAt": "2022-01-22T14:17:55.611Z"
+        }
+    ]
+}
+
+------------------------------------------------
+2)
+Get Questions and Options 
+Url :- http://65.2.42.25:3000/getQuestion?quizId=1
+Method :- get 
+Payload :- --
+
+Response :-
+{
+    "status": 200,
+    "success": true,
+    "message": "Question and Option fetched successfully",
+    "data": [
+        {
+            "id": 2,
+            "categoryTypeId": 1,
+            "tags": "tags",
+            "quizId": 1,
+            "questionContent": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "optionA": "optionA",
+            "optionB": "optionB",
+            "optionC": "optionC",
+            "optionD": "optionD",
+            "answer": "answer",
+            "ansDescription": "dis",
+            "userId": 1,
+            "createdAt": "2022-01-21T19:44:40.000Z",
+            "updatedAt": "2022-01-21T19:44:40.000Z"
+        },
+        {
+            "id": 3,
+            "categoryTypeId": 1,
+            "tags": "tags",
+            "quizId": 1,
+            "questionContent": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+            "optionA": "optionA",
+            "optionB": "optionB",
+            "optionC": "optionC",
+            "optionD": "optionD",
+            "answer": "answer",
+            "ansDescription": "dis",
+            "userId": 1,
+            "createdAt": "2022-01-22T02:34:29.000Z",
+            "updatedAt": "2022-01-22T02:34:29.000Z"
+        }
+    ]
+}
+ 
+Update Api
+---------------------------------
+
+url http://localhost:3000/updateQuestions
+
+method  post 
+
+payload  {
+"id":1,
+"categoryTypeId" : 1,
+"tags": "tags",
+"quizId": 1,
+"questionContent": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa 22-01-2022",
+"optionA": "optionA",
+"optionB": "optionB",
+"optionC": "optionC",
+"optionD": "optionD",
+"answer": "answer",
+"ansDescription": "dis"
+}
+
+
+{
+    "status": 200,
+    "success": true,
+    "data": "Updated Question successfully"
+}
+ 
+Delete api
+---------------------------------------------
+http://localhost:3000/deleteQuestions
+
+post
+
+payload
+{
+    "questionIds" : [4,5]
+}
+ 
+ 
+ Response
+{
+    "status": 200,
+    "success": true,
+    "data": "Deleted Questions and Options successfully"
+}
