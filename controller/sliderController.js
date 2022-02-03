@@ -1,5 +1,6 @@
 const fileUpload = require('../services/fileUpload')
 const sliderRepo = require('../repositories/sliderRepo')
+const testimonialRepo = require('../repositories/testimonialRepo')
 const response = require('../response')
 
 async function createSlider(req, res, next) {
@@ -78,6 +79,11 @@ async function getHomePageResponse(req, res, next) {
         let sliderResult = await sliderRepo.getSlider()
         if (sliderResult) {
             allRes.slider = sliderResult;
+        }
+
+        let testimonialResult = await testimonialRepo.getTestimonial()
+        if (testimonialResult) {
+            allRes.testimonial = testimonialResult;
         }
 
         response.successGet(res, allRes);
