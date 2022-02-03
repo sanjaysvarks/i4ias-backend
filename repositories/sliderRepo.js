@@ -15,6 +15,14 @@ async function getSlider() {
     return result;
 }
 
+
+async function getSliderByCondition(whereCondition) {
+    const result = await sliders.findOne({
+        where : whereCondition
+    })
+    return result;
+}
+
 async function deleteSlider(whereCondition) {
     const result = sliders.destroy({
         where: whereCondition,
@@ -23,9 +31,21 @@ async function deleteSlider(whereCondition) {
     return result;
 }
 
+async function updateSlider(whereCondition, updateInfo) {
+    const result = sliders.update(updateInfo,
+        {
+            where: whereCondition,
+            returning: true
+        }
+    );
+    return result;
+}
+
 
 module.exports = {
     createSlider,
     getSlider,
-    deleteSlider
+    deleteSlider,
+    updateSlider,
+    getSliderByCondition
 }

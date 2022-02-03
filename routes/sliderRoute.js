@@ -9,12 +9,19 @@ router.post('/createSlider',
 )
 
 router.post('/deleteSlider',
+    middleware.token,
     controller.deleteSlider
 )
 
 router.get('/getHomePageResponse',
     controller.getHomePageResponse
 )
+
+router.post('/updateSlider',
+    middleware.token,
+    controller.updateSlider
+)
+
 
 
 module.exports = router;
