@@ -62,13 +62,12 @@ async function deleteTestimonial(req, res, next) {
 async function updateTestimonial(req, res, next) {
     try {
         let { testimonialId, name,designation, description,isNewFile } = req.body
-        let file = req.files.file
+        
         const userId = req.headers.userId
-        let fileName = file.name
+        
         let testimonialWhereCaluse = {
             id: testimonialId
         }
-
         let testimonialResult = await testimonialRepo.getTestimonialByCondition(testimonialWhereCaluse)
         let updatedS3FileKey = testimonialResult.s3FileKey;
         let updatedImgUrl = testimonialResult.imgUrl;
@@ -77,7 +76,9 @@ async function updateTestimonial(req, res, next) {
         if (testimonialResult) {
             //Deleting Files from s3 Bucket 
             if (isNewFile == 'Y') {
-                console.log('testimonialResult=====>',testimonialResult)
+                let file = req.files.file
+                let fileName = file.name
+               
                 //let s3Filekey = updatedS3FileKey;
                 let deleteFileList = [{
                     Key: updatedS3FileKey

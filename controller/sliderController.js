@@ -95,9 +95,8 @@ async function getHomePageResponse(req, res, next) {
 async function updateSlider(req, res, next) {
     try {
         let { sliderId, heading, description, isPrimary, isNewFile } = req.body
-        let file = req.files.file
         const userId = req.headers.userId
-        let fileName = file.name
+       
         let sliderWhereCaluse = {
             id: sliderId
         }
@@ -106,11 +105,11 @@ async function updateSlider(req, res, next) {
         let updatedS3FileKey = sliderResult.s3FileKey;
         let updatedImgUrl = sliderResult.imgUrl;
        
-        
         if (sliderResult) {
             //Deleting Files from s3 Bucket 
             if (isNewFile == 'Y') {
-                console.log('sliderResult=====>',sliderResult)
+                let file = req.files.file
+                let fileName = file.name
                 //let s3Filekey = updatedS3FileKey;
                 let deleteFileList = [{
                     Key: updatedS3FileKey
