@@ -5,6 +5,7 @@ const quiz = require('./quizRoute')
 const question =require('./questionRoute')
 const slider = require('./sliderRoute')
 const testimonial = require('./testimonialRoute')
+const ticker = require('./tickerRoute')
 
 module.exports = function (app) {
     app.use(login);
@@ -14,4 +15,5 @@ module.exports = function (app) {
     app.use(question);
     app.use(slider);
     app.use(testimonial);
+    app.use(ticker);
 }
