@@ -93,16 +93,16 @@ async function getHomePageResponse(req, res, next) {
             allRes.ticker = tickerResult;
         }
 
-        let whatsNewResult = await whatsNewRepo.getWhatsNew()
-        if (whatsNewResult) {
-            allRes.whatsNew = whatsNewResult;
-        }
+        // let whatsNewResult = await whatsNewRepo.getWhatsNew()
+        // if (whatsNewResult) {
+        //     allRes.whatsNew = whatsNewResult;
+        // }
 
-         console.log('allRes.whatsNew===>',allRes.whatsNew)
+        
 
         response.successGet(res, allRes);
     } catch (error) {
-        response.error(error)
+        response.error(res)
     }
 }
 
