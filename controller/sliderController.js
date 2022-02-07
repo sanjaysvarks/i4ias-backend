@@ -2,6 +2,7 @@ const fileUpload = require('../services/fileUpload')
 const sliderRepo = require('../repositories/sliderRepo')
 const testimonialRepo = require('../repositories/testimonialRepo')
 const tickerRepo = require('../repositories/tickerRepo')
+const whatsNewRepo = require('../repositories/whatsNewRepo')
 const response = require('../response')
 
 async function createSlider(req, res, next) {
@@ -92,6 +93,12 @@ async function getHomePageResponse(req, res, next) {
             allRes.ticker = tickerResult;
         }
 
+        let whatsNewResult = await whatsNewRepo.getWhatsNew()
+        if (whatsNewResult) {
+            allRes.whatsNew = whatsNewResult;
+        }
+
+
         response.successGet(res, allRes);
     } catch (error) {
         response.error(res)
@@ -102,7 +109,7 @@ async function updateSlider(req, res, next) {
     try {
         let { sliderId, heading, description, isPrimary, isNewFile } = req.body
         const userId = req.headers.userId
-       
+
         let sliderWhereCaluse = {
             id: sliderId
         }
@@ -110,7 +117,7 @@ async function updateSlider(req, res, next) {
         let sliderResult = await sliderRepo.getSliderByCondition(sliderWhereCaluse)
         let updatedS3FileKey = sliderResult.s3FileKey;
         let updatedImgUrl = sliderResult.imgUrl;
-       
+
         if (sliderResult) {
             //Deleting Files from s3 Bucket 
             if (isNewFile == 'Y') {

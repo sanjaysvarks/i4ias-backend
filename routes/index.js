@@ -6,6 +6,7 @@ const question =require('./questionRoute')
 const slider = require('./sliderRoute')
 const testimonial = require('./testimonialRoute')
 const ticker = require('./tickerRoute')
+const whatsNew = require('./whatsNewRoute')
 
 module.exports = function (app) {
     app.use(login);
@@ -16,4 +17,5 @@ module.exports = function (app) {
     app.use(slider);
     app.use(testimonial);
     app.use(ticker);
+    app.use(whatsNew);
 }
