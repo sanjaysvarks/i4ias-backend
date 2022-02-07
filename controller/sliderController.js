@@ -98,10 +98,11 @@ async function getHomePageResponse(req, res, next) {
             allRes.whatsNew = whatsNewResult;
         }
 
+         console.log('allRes.whatsNew===>',allRes.whatsNew)
 
         response.successGet(res, allRes);
     } catch (error) {
-        response.error(res)
+        response.error(error)
     }
 }
 
