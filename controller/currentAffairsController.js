@@ -3,7 +3,7 @@ const currentAffairsRepo = require('../repositories/currentAffairsRepo')
 const db = require('../models/index')
 const Op = db.Sequelize.Op
 const Sequelize = db.Sequelize
-const pdf = require('html-pdf');
+//const pdf = require('html-pdf');
 var mime = require('mime');
 
 

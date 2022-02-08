@@ -22,7 +22,7 @@ async function createTestimonial(req, res, next) {
 
         let result = await testimonialRepo.createTestimonial(testimonialData)
         if (result) {
-            response.successPost(res, result, "testimonial");
+            response.successFileUploadPost(res, result, "File");
         }
         else {
             response.error(res)

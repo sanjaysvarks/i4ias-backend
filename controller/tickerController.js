@@ -28,7 +28,7 @@ async function createTicker(req, res, next) {
 
         let result = await tickerRepo.createTicker(tickerData)
         if (result) {
-            response.successPost(res, result, "ticker");
+            response.successFileUploadPost(res, result, "File");
         }
         else {
             response.error(res)

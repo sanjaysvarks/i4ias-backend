@@ -30,7 +30,7 @@ async function createWhatsNew(req, res, next) {
 
         let result = await whatsNewRepo.createWhatsNew(whatsNewData)
         if (result) {
-            response.successPost(res, result, "whatsNew");
+            response.successFileUploadPost(res, result, "File");
         }
         else {
             response.error(res)

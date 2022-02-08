@@ -25,7 +25,7 @@ async function createSlider(req, res, next) {
 
         let result = await sliderRepo.createSlider(sliderData)
         if (result) {
-            response.successPost(res, result, "slider");
+            response.successFileUploadPost(res, result, "File");
         }
         else {
             response.error(res)
@@ -93,10 +93,10 @@ async function getHomePageResponse(req, res, next) {
             allRes.ticker = tickerResult;
         }
 
-        // let whatsNewResult = await whatsNewRepo.getWhatsNew()
-        // if (whatsNewResult) {
-        //     allRes.whatsNew = whatsNewResult;
-        // }
+        let whatsNewResult = await whatsNewRepo.getWhatsNew()
+        if (whatsNewResult) {
+            allRes.whatsNew = whatsNewResult;
+        }
 
         
 
