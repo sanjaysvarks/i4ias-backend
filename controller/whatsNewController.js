@@ -37,7 +37,7 @@ async function createWhatsNew(req, res, next) {
         }
 
     } catch (error) {
-        response.error(error)
+        response.error(res)
     }
 
 }
@@ -125,7 +125,7 @@ async function updateWhatsNew(req, res, next) {
 
     } catch (error) {
 
-        response.error(error);
+        response.error(res);
     }
 }
 
