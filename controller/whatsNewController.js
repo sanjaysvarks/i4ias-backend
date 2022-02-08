@@ -27,17 +27,21 @@ async function createWhatsNew(req, res, next) {
             whatsNewDate: whatsNewDate,
             userId: userId
         }
-
+       
+        console.log("whatsNewData==========>",whatsNewData)
         let result = await whatsNewRepo.createWhatsNew(whatsNewData)
         if (result) {
-        //    response.successFileUploadPost(res, result, "File");
+           response.successFileUploadPost(res, result, "File");
+           console.log("whatsNew result==========>",result)
         }
         else {
             response.error(res)
         }
 
     } catch (error) {
+        console.log("error=====>",error)
         response.error(res)
+        
     }
 
 }
