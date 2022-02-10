@@ -30,7 +30,7 @@ async function createWhatsNew(req, res, next) {
 
         let result = await whatsNewRepo.createWhatsNew(whatsNewData)
         if (result) {
-           response.successFileUploadPost(res, result, "File");
+            response.successFileUploadPost(res, result, "File");
         }
         else {
             response.error(res)
@@ -38,7 +38,7 @@ async function createWhatsNew(req, res, next) {
 
     } catch (error) {
         response.error(res)
-        
+
     }
 
 }
@@ -130,9 +130,31 @@ async function updateWhatsNew(req, res, next) {
     }
 }
 
+async function getWhatsNewById(req, res, next) {
+    try {
+        let whatsNewId = req.query.whatsNewId
+        let whatsNewWhereCaluse = {
+            id: whatsNewId
+        }
+        let whatsNewResult = await whatsNewRepo.getWhatsNew(whatsNewWhereCaluse);
+        if (whatsNewResult) {
+          //  console.log("whatsNewResult===>",whatsNewResult)
+            response.successGet(res, whatsNewResult, "WhatsNew");
+        } else {
+            response.error(res, "WhatsNew");
+        }
+
+    } catch (error) {
+        console.log("error====>",error)
+        response.error(res);
+    }
+
+}
+
 
 module.exports = {
     createWhatsNew,
     deleteWhatsNew,
-    updateWhatsNew
+    updateWhatsNew,
+    getWhatsNewById
 }

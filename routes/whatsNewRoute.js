@@ -17,5 +17,8 @@ router.post('/updateWhatsNew',
     controller.updateWhatsNew
 )
 
+router.get('/getWhatsNewById',
+controller.getWhatsNewById)
+
 
 module.exports = router;

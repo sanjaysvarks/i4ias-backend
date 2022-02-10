@@ -29,15 +29,27 @@ async function updateWhatsNew(whereCondition, updateInfo) {
 
 async function getWhatsNewByCondition(whereCondition) {
     const result = await whatsNews.findOne({
-        where : whereCondition
+        where: whereCondition
     })
     return result;
 }
 
-async function getWhatsNew() {
-    const result = await whatsNews.findAll()
-    return result;
+async function getWhatsNew(whereCondition) {
+   
+    if (whereCondition) {
+        const result = await whatsNews.findAll({
+            where: whereCondition
+        })
+        return result;
+    }
+    else {
+        const result = await whatsNews.findAll()
+        return result;
+    }
+    
 }
+
+
 
 module.exports = {
     createWhatsNew,
