@@ -1,13 +1,14 @@
 const AWS = require('aws-sdk');
 
-async function uploadFile(fileName, fileContent, path) {
+async function uploadFile(fileName, file, path) {
     const BUCKET_NAME = process.env.BUCKET_NAME;
     // Setting up S3 upload parameters
     let fullPath = `${BUCKET_NAME}/${path}`
     const params = {
         Bucket: fullPath,
         Key: fileName,// File name you want to save as in S3
-        Body: fileContent
+        Body: file.data,
+        ContentType: file.mimetype
     };
 
     const s3 = new AWS.S3({
@@ -21,7 +22,7 @@ async function uploadFile(fileName, fileContent, path) {
     return data;
 };
 
-async function deleteFile(fileList, path){
+async function deleteFile(fileList, path) {
     const BUCKET_NAME = process.env.BUCKET_NAME;
     // Setting up S3 upload parameters
     let fullPath = `${BUCKET_NAME}`
@@ -40,8 +41,8 @@ async function deleteFile(fileList, path){
 
     //// Delete files From bucket
     let data = await s3.deleteObjects(params,
-        ).promise();
-        return data;
+    ).promise();
+    return data;
 }
 // s3.deleteObject(params, function(err, data) {
 //     if (err) console.log(err, err.stack);  // error

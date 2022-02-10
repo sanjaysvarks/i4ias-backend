@@ -10,7 +10,7 @@ async function createWhatsNew(req, res, next) {
         if (req.files && req.files.file) {
             file = req.files.file
             let fileName = file.name;
-            s3Response = await fileUpload.uploadFile(fileName, file.data, 'whatsNew')
+            s3Response = await fileUpload.uploadFile(fileName, file, 'whatsNew')
         };
 
         let { description, editor, hyperLink, whatsNewDate } = req.body
@@ -96,7 +96,7 @@ async function updateWhatsNew(req, res, next) {
                     }]
                     await fileUpload.deleteFile(deleteFileList, 'whatsNew')
                 }
-                let s3Response = await fileUpload.uploadFile(fileName, file.data, 'whatsNew')
+                let s3Response = await fileUpload.uploadFile(fileName, file, 'whatsNew')
                 updatedS3FileKey = s3Response.Key;
                 updatedImgUrl = s3Response.Location;
             }

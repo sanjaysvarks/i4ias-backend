@@ -7,11 +7,11 @@ async function createTicker(req, res, next) {
     try {
         let file = null;
         let s3Response = {};
-
+     
         if (req.files && req.files.file) {
             file = req.files.file;
             let fileName = file.name;
-            s3Response = await fileUpload.uploadFile(fileName, file.data, 'ticker')
+            s3Response = await fileUpload.uploadFile(fileName, file, 'ticker')
         }
 
         let { description, hyperLinkUrl } = req.body
@@ -93,7 +93,7 @@ async function updateTicker(req, res, next) {
                     }]
                     await fileUpload.deleteFile(deleteFileList, 'ticker')
                 }
-                let s3Response = await fileUpload.uploadFile(fileName, file.data, 'ticker')
+                let s3Response = await fileUpload.uploadFile(fileName, file, 'ticker')
                 updatedS3FileKey = s3Response.Key;
                 updatedImgUrl = s3Response.Location;
             }

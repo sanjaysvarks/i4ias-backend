@@ -9,7 +9,7 @@ async function createTestimonial(req, res, next) {
         const userId = req.headers.userId
         console.log("file object", file)
         let fileName = file.name;
-        let s3Response = await fileUpload.uploadFile(fileName, file.data, 'testimonial')
+        let s3Response = await fileUpload.uploadFile(fileName, file, 'testimonial')
         console.log('s3Response==============>', s3Response)
         let testimonialData = {
             name: name,
@@ -84,7 +84,7 @@ async function updateTestimonial(req, res, next) {
                     Key: updatedS3FileKey
                 }]
                 await fileUpload.deleteFile(deleteFileList, 'testimonial')
-                let s3Response = await fileUpload.uploadFile(fileName, file.data, 'testimonial')
+                let s3Response = await fileUpload.uploadFile(fileName, file, 'testimonial')
                 updatedS3FileKey = s3Response.Key;
                 updatedImgUrl = s3Response.Location;
             }

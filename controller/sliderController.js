@@ -12,7 +12,7 @@ async function createSlider(req, res, next) {
         const userId = req.headers.userId
         console.log("file object", file)
         let fileName = file.name;
-        let s3Response = await fileUpload.uploadFile(fileName, file.data, 'slider')
+        let s3Response = await fileUpload.uploadFile(fileName, file, 'slider')
         console.log('s3Response==============>', s3Response)
         let sliderData = {
             heading: heading,
@@ -129,7 +129,7 @@ async function updateSlider(req, res, next) {
                     Key: updatedS3FileKey
                 }]
                 await fileUpload.deleteFile(deleteFileList, 'slider')
-                let s3Response = await fileUpload.uploadFile(fileName, file.data, 'slider')
+                let s3Response = await fileUpload.uploadFile(fileName, file, 'slider')
                 updatedS3FileKey = s3Response.Key;
                 updatedImgUrl = s3Response.Location;
             }
