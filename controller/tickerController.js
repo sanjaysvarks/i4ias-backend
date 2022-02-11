@@ -10,6 +10,7 @@ async function createTicker(req, res, next) {
      
         if (req.files && req.files.file) {
             file = req.files.file;
+            console.log('file=============>',file)
             let fileName = file.name;
             s3Response = await fileUpload.uploadFile(fileName, file, 'ticker')
         }
