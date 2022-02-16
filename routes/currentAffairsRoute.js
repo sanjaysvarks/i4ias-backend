@@ -80,6 +80,11 @@ router.post('/getdatafromtodate',
 controller.getDataFromToDate
 )
 
+router.get('/getRecentRecords',
+//middleware.token,
+controller.getRecentRecords
+)
+
 
 
 module.exports = router;

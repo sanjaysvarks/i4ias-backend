@@ -258,6 +258,30 @@ async function getDataFromToDate(req, res, next) {
 
 }
 
+async function getRecentRecords(req, res, next) {
+    let  currentAffairs = 'CA'
+    let  impEditorials  = 'Important Editorials'
+
+    let query =`select * from (
+				(select CONVERT(DATE_FORMAT(currentAffairsDate, "%d-%b-%Y"),char) recentRecords,
+					   currentAffairsDate 
+				from currentaffairs  
+				where categoryType = '${currentAffairs}')
+                union all
+				(select description recentRecords,
+					   currentAffairsDate 
+				from currentaffairs  
+				where categoryType = '${impEditorials}')
+				) a
+				order by a.currentAffairsDate desc`
+
+    let data = await db.sequelize.query(query)
+
+    response.successGet(res, data[0])
+
+}
+
+
 module.exports = {
     createCurrentAffairs,
    // getCurrentAffairs,
@@ -273,5 +297,6 @@ module.exports = {
     getDateForFolderName,
     getCurrentAffairsNavigationByDatenType,
     getCurrentAffairsBycatetoryType,
-    getDataFromToDate
+    getDataFromToDate,
+    getRecentRecords
 }
