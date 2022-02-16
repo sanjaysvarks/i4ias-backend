@@ -174,9 +174,12 @@ async function getCurrentAffairsNavigationByTypenDate(currentAffDate, categoryty
 }
 
 async function searchByCondition(whereCondition) {
-
+    let order = [
+        ['id', 'DESC']
+    ]
     let result = await currentAffairs.findAll({
-        where: whereCondition
+        where: whereCondition,
+        order: order
     })
     return result;
 
