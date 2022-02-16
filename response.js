@@ -25,7 +25,7 @@ module.exports = {
     res.status(201).json({
       status:201,
       success: true,
-      message: `The ${itemsName} successfully`,
+      message: `${itemsName} successfully`,
       data: data
     });
   },

@@ -72,13 +72,19 @@ async function getScholarshipByCondition(whereCondition) {
     return result;
 }
 
+async function getScholarship() {
+    const result = await scholarships.findAll()
+    return result;
+}
+
 module.exports = {
     getUserByPhoneOrEmail,
     createNewUser,
     updateUser,
     getUserById,
     createScholarship,
-    getScholarshipByCondition
+    getScholarshipByCondition,
+    getScholarship
 
 };
 

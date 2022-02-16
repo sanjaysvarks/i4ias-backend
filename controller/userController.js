@@ -91,9 +91,9 @@ async function getScholarship(req, res, next) {
 
        let result = await userRepo.getScholarship();
        if (result) {
-           response.successGet(res, result, "Scholarship");
+           response.successGet(res, result, "Register User");
        } else {
-           response.errorNotFound(res, "Scholarship");
+           response.errorNotFound(res, "Register User");
        }
    } catch (error) {
        response.error(res)
