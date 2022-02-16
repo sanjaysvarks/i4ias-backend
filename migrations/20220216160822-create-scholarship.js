@@ -1,20 +1,16 @@
 'use strict';
 module.exports = {
   up: (queryInterface, Sequelize) => {
-    return queryInterface.createTable('user', {
+    return queryInterface.createTable('scholarships', {
       id: {
         allowNull: false,
         primaryKey: true,
         autoIncrement: true,
         type: Sequelize.INTEGER
       },
-      fName: {
+      fullName: {
         type: Sequelize.STRING,
         allowNull: false
-      },
-      lName: {
-        type: Sequelize.STRING,
-        allowNull: true
       },
       email: {
         type: Sequelize.STRING,
@@ -27,40 +23,36 @@ module.exports = {
         unique: true,
         allowNull: true
       },
-      password: {
+      course: {
         type: Sequelize.STRING
       },
       gender: {
         type: Sequelize.ENUM,
         values: ['male', 'female', 'other'],
       },
-      role: {
-        type: Sequelize.ENUM,
-        values: ['student', 'content_team', 'admin'],
-      },
-     dob: Sequelize.STRING,
-      address: {
-        type: Sequelize.TEXT
-      },
-      pincode: {
-        type: Sequelize.STRING
-      },
+      dob: Sequelize.STRING,
       city: {
         type: Sequelize.STRING
       },
-      state: {
+      graduation: {
         type: Sequelize.STRING
       },
-      isActive: {
+      testMode: {
+        type: Sequelize.ENUM,
+        values: ['Online', 'Offline']
+      },
+      testCenter: {
+        type: Sequelize.TEXT
+      },
+      govtIdType: {
+        type: Sequelize.STRING
+      },
+      govtIdDetails: {
+        type: Sequelize.STRING
+      },
+      tcFlag: {
         type: Sequelize.STRING,
         defaultValue: 'Y'
-      },
-      lastLogin: {
-        type: Sequelize.DATE
-      },
-      isEmailVerified: {
-        type: Sequelize.BOOLEAN,
-        defaultValue: false
       },
       createdAt: {
         type: 'TIMESTAMP',
@@ -75,6 +67,6 @@ module.exports = {
     });
   },
   down: (queryInterface, Sequelize) => {
-    return queryInterface.dropTable('user');
+    return queryInterface.dropTable('scholarships');
   }
 };

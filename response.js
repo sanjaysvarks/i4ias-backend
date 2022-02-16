@@ -20,6 +20,16 @@ module.exports = {
       data: data
     });
   },
+
+  successRegisterPost: function (res,data, itemsName = 'Data') {
+    res.status(201).json({
+      status:201,
+      success: true,
+      message: `The ${itemsName} successfully`,
+      data: data
+    });
+  },
+
   successFileUploadPost: function (res,data, itemsName = 'Data') {
     res.status(201).json({
       status:201,

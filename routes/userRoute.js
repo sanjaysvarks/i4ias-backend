@@ -14,4 +14,8 @@ controller.createUser);
 router.post('/getuser',
 controller.getUser)
 
+router.post('/createScholarship',
+controller.createScholarship)
+
+
 module.exports = router;

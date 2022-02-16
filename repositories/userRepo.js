@@ -1,5 +1,6 @@
 const db = require('../models/index')
 const User = db.user
+const scholarships= db.scholarships
 const Op = db.Sequelize.Op
 const authService = require('../services/authServices')
 
@@ -59,11 +60,25 @@ async function updateUser(id, updateInfo) {
     return result;
 }
 
+async function createScholarship(scholarshipData) {
+    const result = await scholarships.create(scholarshipData);
+    return result;
+}
+
+async function getScholarshipByCondition(whereCondition) {
+    const result = await scholarships.findOne({
+        where : whereCondition
+    })
+    return result;
+}
+
 module.exports = {
     getUserByPhoneOrEmail,
     createNewUser,
     updateUser,
-    getUserById
+    getUserById,
+    createScholarship,
+    getScholarshipByCondition
 
 };
 
