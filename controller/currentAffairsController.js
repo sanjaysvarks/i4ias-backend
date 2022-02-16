@@ -265,12 +265,12 @@ async function getRecentRecords(req, res, next) {
     let query =`select * from (
 				(select CONVERT(DATE_FORMAT(currentAffairsDate, "%d-%b-%Y"),char) recentRecords,
 					   currentAffairsDate 
-				from currentaffairs  
+				from currentAffairs  
 				where categoryType = '${currentAffairs}')
                 union all
 				(select description recentRecords,
 					   currentAffairsDate 
-				from currentaffairs  
+				from currentAffairs  
 				where categoryType = '${impEditorials}')
 				) a
 				order by a.currentAffairsDate desc`
