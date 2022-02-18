@@ -38,12 +38,19 @@ async function getWhatsNew(whereCondition) {
    
     if (whereCondition) {
         const result = await whatsNews.findAll({
-            where: whereCondition
+            where: whereCondition,
+            order: [
+                ['whatsNewDate', 'DESC']
+            ]
         })
         return result;
     }
     else {
-        const result = await whatsNews.findAll()
+        const result = await whatsNews.findAll({
+            order: [
+                ['whatsNewDate', 'DESC']
+            ]
+        })
         return result;
     }
     

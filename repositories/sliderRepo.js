@@ -11,7 +11,11 @@ async function createSlider(sliderData) {
 }
 
 async function getSlider() {
-    const result = await sliders.findAll()
+    const result = await sliders.findAll({
+        order: [
+            ['id', 'DESC']
+        ]
+    })
     return result;
 }
 

@@ -35,7 +35,11 @@ async function getTestimonialByCondition(whereCondition) {
 }
 
 async function getTestimonial() {
-    const result = await testimonials.findAll()
+    const result = await testimonials.findAll({
+        order: [
+            ['id', 'DESC']
+        ]
+    })
     return result;
 }
 

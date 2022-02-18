@@ -35,7 +35,11 @@ async function getTickerByCondition(whereCondition) {
 }
 
 async function getTicker() {
-    const result = await tickers.findAll()
+    const result = await tickers.findAll({
+        order: [
+            ['id', 'DESC']
+        ]
+    })
     return result;
 }
 
