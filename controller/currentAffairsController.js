@@ -263,18 +263,18 @@ async function getRecentRecords(req, res, next) {
     let  impEditorials  = 'Important Editorials'
 
     let query =`select distinct id,recentRecords, 
-                       currentAffairsDate,
+                       DATE_FORMAT(currentAffairsDate, "%d-%b-%Y") currentAffairsDate,
                        categoryType 
                 from 
                 (
 				(select 0 as id,CONVERT(DATE_FORMAT(currentAffairsDate, "%d-%b-%Y"),char) recentRecords,
-                        DATE_FORMAT(currentAffairsDate, "%d-%b-%Y") currentAffairsDate,
+                        currentAffairsDate,
                         categoryType 
 				from currentAffairs  
 				where categoryType = '${currentAffairs}')
                 union all
 				(select id,description recentRecords,
-                        DATE_FORMAT(currentAffairsDate, "%d-%b-%Y") currentAffairsDate,
+                        currentAffairsDate,
                         categoryType 
 				from currentAffairs  
 				where categoryType = '${impEditorials}')
