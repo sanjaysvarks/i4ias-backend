@@ -29,6 +29,7 @@ async function createTestimonial(req, res, next) {
         }
 
     } catch (error) {
+        console.log("error===>",error)
         response.error(res)
     }
 
