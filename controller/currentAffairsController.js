@@ -133,13 +133,17 @@ async function getCurrentAffairsNavigationByDatenType(req, res, next) {
 
 async function getCurrentAffairsByTag(req, res, next) {
     const query = req.query.tag;
+    
+    let order = [
+        ['id', 'DESC']
+    ]
 
     let whereCondition = {
         tags: {
             [Op.like]: '%' + query + '%'
         }
     };
-    let result = await currentAffairsRepo.searchByCondition(whereCondition)
+    let result = await currentAffairsRepo.searchByCondition(whereCondition,order)
     if (result) {
         response.successGet(res, result, "Current Affairs");
     } else {
@@ -150,6 +154,9 @@ async function getCurrentAffairsByTag(req, res, next) {
 async function getCurrentAffairsByDate(req, res, next) {
     const query = req.query.date;
     const categoryType = req.query.categoryType;
+    let order = [
+        ['id', 'ASC']
+    ]
     let where = Sequelize.where(
         Sequelize.literal('DATE_FORMAT(currentAffairsDate, "%d-%b-%Y")'),
         { [Op.eq]: query }
@@ -170,7 +177,7 @@ async function getCurrentAffairsByDate(req, res, next) {
     {
         [Op.and]: conditionList
     }
-    let result = await currentAffairsRepo.searchByCondition(condition)
+    let result = await currentAffairsRepo.searchByCondition(condition,order)
     if (result) {
         response.successGet(res, result, "Current Affairs");
     } else {
@@ -181,11 +188,14 @@ async function getCurrentAffairsByDate(req, res, next) {
 async function getCurrentAffairsBycatetoryType(req, res, next) {
 
     const categorytype = req.query.categorytype;
+    let order = [
+        ['id', 'DESC']
+    ]
     whereCondition = {
         categoryType: categorytype
     }
 
-    let result = await currentAffairsRepo.searchByCondition(whereCondition)
+    let result = await currentAffairsRepo.searchByCondition(whereCondition,order)
     if (result) {
         response.successGet(res, result, "Current Affairs");
     } else {
