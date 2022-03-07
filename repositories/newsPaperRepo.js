@@ -27,19 +27,26 @@ async function updateNewsPaper(whereCondition, updateInfo) {
     return result;
 }
 
-async function getNewsPaperByCondition(whereCondition) {
+async function getNewsPaperByCondition(whereCondition, genOrder) {
     const result = await newsPapers.findOne({
-        where : whereCondition
+        attributes: [
+            'id', 'newsPaperName', 'description', 'content',
+            [db.Sequelize.fn('DATE_FORMAT', db.Sequelize.col('createdDate'), '%d-%b-%Y'), 'createdDate'],
+            'userId', 'createdAt', 'updatedAt'],
+        where: whereCondition,
+        order: genOrder
     })
     return result;
 }
 
-async function getNewsPaper(whereCondition) {
+async function getNewsPaper(whereCondition, genOrder) {
     const result = await newsPapers.findAll({
-        where : whereCondition,
-        order: [
-            ['id', 'DESC']
-        ]
+        attributes: [
+            'id', 'newsPaperName', 'description', 'content',
+            [db.Sequelize.fn('DATE_FORMAT', db.Sequelize.col('createdDate'), '%d-%b-%Y'), 'createdDate'],
+            'userId', 'createdAt', 'updatedAt'],
+        where: whereCondition,
+        order: genOrder
     })
     return result;
 }

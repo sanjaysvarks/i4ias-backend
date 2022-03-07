@@ -26,6 +26,20 @@ router.get('/getNewsPaper',
     controller.getNewsPaper
 )
 
+router.post('/getNewPaperDataBWtwodates',
+    controller.getNewPaperDataBWtwodates
+)
+
+router.post('/getNewsPaperNavigation',
+//middleware.token,
+controller.getNewsPaperNavigation
+)
+
+router.post('/getNewsPaperNavigationByDate',
+//middleware.token,
+controller.getNewsPaperNavigationByDate
+)
+
 
 
 module.exports = router;
