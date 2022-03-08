@@ -45,5 +45,10 @@ router.post('/getIdAndNewsPaper',
 controller.getIdAndNewsPaper
 )
 
+router.get('/getNewsPaperByDate',
+//middleware.token,
+controller.getNewsPaperByDate
+)
+
 
 module.exports = router;

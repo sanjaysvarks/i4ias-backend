@@ -239,15 +239,52 @@ async function getIdAndNewsPaper(req, res, next) {
             ['id', 'DESC']
         ]
 
-        let result = await newsPaperRepo.getNewsPaper(newsPaperWhereCaluse, genOrder)
+        let result = await newsPaperRepo.getNewsPaperByCondition(newsPaperWhereCaluse, genOrder)
         if (result) {
-            response.successGet(res, result, "NewsPaper");
+            console.log(result)
+          response.successGet(res, result, "NewsPaper");
+           
         } else {
             response.errorNotFound(res, "NewsPaper");
         }
     } catch (error) {
        
         response.error(res)
+    }
+}
+
+
+async function getNewsPaperByDate(req, res, next) {
+    const reqDate = req.query.date;
+    const newsPaper = req.query.newsPaper;
+    let order = [
+        ['id', 'ASC']
+    ]
+    let where = Sequelize.where(
+        Sequelize.literal('DATE_FORMAT(createdDate, "%d-%b-%Y")'),
+        { [Op.eq]: reqDate }
+    )
+    let conditionList = [where]
+
+    if (newsPaper) {
+        conditionList.push(
+            {
+                newsPaperName: {
+                    [Op.eq]: newsPaper
+                }
+            }
+        )
+    }
+
+    var condition =
+    {
+        [Op.and]: conditionList
+    }
+    let result = await newsPaperRepo.getNewsPaper(condition,order)
+    if (result) {
+        response.successGet(res, result, "NewsPapers");
+    } else {
+        response.errorNotFound(res, "NewsPapers");
     }
 }
 
@@ -259,5 +296,6 @@ module.exports = {
     getNewPaperDataBWtwodates,
     getNewsPaperNavigation,
     getNewsPaperNavigationByDate,
-    getIdAndNewsPaper
+    getIdAndNewsPaper,
+    getNewsPaperByDate
 }
