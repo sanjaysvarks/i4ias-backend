@@ -51,9 +51,9 @@ async function getNewsPaper(whereCondition, genOrder) {
     return result;
 }
 
-async function getNewsPaperFolderName(newsPaperName) {
+async function getNewsPaperFolderName(newsPaper) {
     let condition = {
-        newsPaperName: newsPaperName
+        newsPaperName: newsPaper
     }
 
     let result = await newsPapers.findAll({
