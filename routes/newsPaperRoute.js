@@ -50,7 +50,7 @@ router.get('/getNewsPaperByDate',
 controller.getNewsPaperByDate
 )
 
-router.get('/getNewaPaperFolderName',
+router.post('/getNewaPaperFolderName',
 //middleware.token,
 controller.getNewaPaperFolderName
 )

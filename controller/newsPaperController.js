@@ -289,7 +289,7 @@ async function getNewsPaperByDate(req, res, next) {
 }
 
 async function getNewaPaperFolderName(req, res, next) {
-    const newsPaper = req.query.newspaper
+    const newsPaper = req.body.newspaper
     let result = await newsPaperRepo.getNewsPaperFolderName(newsPaper)
     if (result) {
         response.successGet(res, result, "NewsPapers");
