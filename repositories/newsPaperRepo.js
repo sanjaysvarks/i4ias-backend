@@ -51,10 +51,27 @@ async function getNewsPaper(whereCondition, genOrder) {
     return result;
 }
 
+async function getNewsPaperFolderName(newsPaperName) {
+    let condition = {
+        newsPaperName: newsPaperName
+    }
+
+    let result = await newsPapers.findAll({
+        attributes: [[Sequelize.fn('DISTINCT', Sequelize.literal('DATE_FORMAT(createdDate, "%d-%b-%Y")')), 'createdDate']],
+        where: condition,
+        order: [
+            ['createdDate', 'DESC']
+        ],
+        limit: 30
+    })
+    return result;
+
+}
 module.exports = {
     createNewsPaper,
     deleteNewsPaper,
     updateNewsPaper,
     getNewsPaperByCondition,
-    getNewsPaper
+    getNewsPaper,
+    getNewsPaperFolderName
 }

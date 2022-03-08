@@ -288,6 +288,16 @@ async function getNewsPaperByDate(req, res, next) {
     }
 }
 
+async function getNewaPaperFolderName(req, res, next) {
+    const newsPaperName = req.query.newsPaper
+    let result = await newsPaperRepo.getNewsPaperFolderName(newsPaperName)
+    if (result) {
+        response.successGet(res, result, "NewsPapers");
+    } else {
+        response.errorNotFound(res, "NewsPapers");
+    }
+}
+
 module.exports = {
     createNewsPaper,
     updateNewspaper,
@@ -297,5 +307,6 @@ module.exports = {
     getNewsPaperNavigation,
     getNewsPaperNavigationByDate,
     getIdAndNewsPaper,
-    getNewsPaperByDate
+    getNewsPaperByDate,
+    getNewaPaperFolderName
 }

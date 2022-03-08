@@ -50,5 +50,10 @@ router.get('/getNewsPaperByDate',
 controller.getNewsPaperByDate
 )
 
+router.get('/getNewaPaperFolderName',
+//middleware.token,
+controller.getNewaPaperFolderName
+)
+
 
 module.exports = router;
