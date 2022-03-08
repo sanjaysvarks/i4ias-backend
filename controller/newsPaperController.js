@@ -288,13 +288,14 @@ async function getNewsPaperByDate(req, res, next) {
     }
 }
 
-async function getNewaPaperFolderName(req, res, next) {
+async function getNewsPaperFolderName(req, res, next) {
     const newsPaper = req.body.newspaper
     let condition = {
         newsPaperName: newsPaper
     }
-
+    console.log('condition===>',condition)
     let result = await newsPaperRepo.getNewsPaperFolderName(condition)
+    console.log('result===>',result)
     if (result) {
         response.successGet(res, result, "NewsPapers");
     } else {
@@ -312,5 +313,5 @@ module.exports = {
     getNewsPaperNavigationByDate,
     getIdAndNewsPaper,
     getNewsPaperByDate,
-    getNewaPaperFolderName
+    getNewsPaperFolderName
 }
