@@ -227,6 +227,29 @@ async function getNewsPaperNavigationByDate(req, res, next) {
     }
 }
 
+async function getIdAndNewsPaper(req, res, next) {
+    try {
+        const {newsPaperName,newsPaperId} = req.body
+      
+        let newsPaperWhereCaluse = {
+            id : newsPaperId,
+            newsPaperName: newsPaperName
+        }
+        let genOrder = [
+            ['id', 'DESC']
+        ]
+
+        let result = await newsPaperRepo.getNewsPaper(newsPaperWhereCaluse, genOrder)
+        if (result) {
+            response.successGet(res, result, "NewsPaper");
+        } else {
+            response.errorNotFound(res, "NewsPaper");
+        }
+    } catch (error) {
+       
+        response.error(res)
+    }
+}
 
 module.exports = {
     createNewsPaper,
@@ -235,5 +258,6 @@ module.exports = {
     getNewsPaper,
     getNewPaperDataBWtwodates,
     getNewsPaperNavigation,
-    getNewsPaperNavigationByDate
+    getNewsPaperNavigationByDate,
+    getIdAndNewsPaper
 }

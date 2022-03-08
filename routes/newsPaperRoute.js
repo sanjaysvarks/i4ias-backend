@@ -40,6 +40,10 @@ router.post('/getNewsPaperNavigationByDate',
 controller.getNewsPaperNavigationByDate
 )
 
+router.post('/getIdAndNewsPaper',
+//middleware.token,
+controller.getIdAndNewsPaper
+)
 
 
 module.exports = router;
