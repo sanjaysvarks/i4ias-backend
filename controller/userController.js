@@ -3,6 +3,7 @@ const userRepo = require('../repositories/userRepo')
 const RESOURSE_NAME = "User"
 const db = require('../models/index')
 const Op = db.Sequelize.Op
+const csvGenerator = require('../services/csvFileGenerator')
 
 
 async function createUser(req, res, next) {
@@ -100,9 +101,27 @@ async function getScholarship(req, res, next) {
    }
 }
 
+async function excelSheetData(req, res, next) {
+   let fromDate = req.query.fromDate
+   let toDate = req.query.toDate
+   
+   let query = `select  fullName, email, phone, course, gender, dob, city, 
+                        graduation, testMode, testCenter, govtIdType, 
+                        govtIdDetails,DATE_FORMAT(createdAt, "%d-%b-%Y") createdAt
+                from scholarships
+                where DATE_FORMAT(createdAt, "%d-%b-%Y") >= '${fromDate}' and 
+                      DATE_FORMAT(createdAt, "%d-%b-%Y") <= '${toDate}'`
+   console.log(query)
+   let data = await db.sequelize.query(query)
+
+   const generatedCSV = csvGenerator.generate(['fullName', 'email', 'phone','course','gender', 'dob', 'city','graduation','testMode','testCenter','govtIdType','govtIdDetails','createdAt'], data[0])
+   response.successCSV(res, generatedCSV, 'studentList')
+}
+
 module.exports = {
    createUser,
    getUser,
    createScholarship,
-   getScholarship
+   getScholarship,
+   excelSheetData
 }

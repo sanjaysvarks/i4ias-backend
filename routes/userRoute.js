@@ -20,4 +20,7 @@ controller.createScholarship)
 router.get('/getScholarship',
 controller.getScholarship)
 
+router.get('/excelSheetData',
+controller.excelSheetData)
+
 module.exports = router;

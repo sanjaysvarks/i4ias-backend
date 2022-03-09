@@ -79,4 +79,11 @@ module.exports = {
       message: `${itemsName} does not exist`
     });
   },
+
+  successCSV: (res, data, filename) => {
+    res.setHeader('Content-disposition', `attachment; filename=${filename}-Report-${new Date()}.csv`);
+    res.set('Content-Type', 'text/csv');
+    return res.status(200).send(data);
+  },
+  
 };
