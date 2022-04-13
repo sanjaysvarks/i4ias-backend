@@ -8,6 +8,7 @@ const testimonial = require('./testimonialRoute')
 const ticker = require('./tickerRoute')
 const whatsNew = require('./whatsNewRoute')
 const newsPaper = require('./newsPaperRoute')
+const studentRegistration = require('./studentRegistrationRoute')
 
 module.exports = function (app) {
     app.use(login);
@@ -20,4 +21,5 @@ module.exports = function (app) {
     app.use(ticker);
     app.use(whatsNew);
     app.use(newsPaper);
+    app.use(studentRegistration);
 }
