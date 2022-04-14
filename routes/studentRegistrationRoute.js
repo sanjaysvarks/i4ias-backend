@@ -3,7 +3,6 @@ const controller = require('../controller/studentRegistrationController');
 const middleware = require('../middleware/tokenValidation') 
 
 router.post('/createStudentRegistration',
-    middleware.token,
     controller.createstudentRegistration
 )
 
