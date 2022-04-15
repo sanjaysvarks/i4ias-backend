@@ -21,6 +21,15 @@ module.exports = {
     });
   },
 
+  successStudentRegistrationPost: function (res,data, itemsName = 'Data') {
+    res.status(201).json({
+      status:201,
+      success: true,
+      message: `You have successfully submitted the form`,
+      data: data
+    });
+  },
+
   successRegisterPost: function (res,data, itemsName = 'Data') {
     res.status(201).json({
       status:201,

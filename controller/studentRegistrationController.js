@@ -9,10 +9,22 @@ const csvGenerator = require('../services/csvFileGenerator')
 async function createstudentRegistration(req, res, next) {
     const { name, email, phone, testType, testMode } = req.body
     
-    let RegData = { 
-        email: email,
-        phone: phone
-    }
+
+    let RegData  = {
+        [Op.or]: [
+           {
+              phone: {
+                 [Op.eq]: phone
+              },
+           },
+           {
+              email: {
+                 [Op.eq]: email
+              }
+           }
+        ]
+     }
+
     let studentRegData = {
         name: name,
         email: email,
@@ -30,7 +42,7 @@ async function createstudentRegistration(req, res, next) {
     else {
         let createdStudentData = await studentRegistrationRepo.createstudentRegistration(studentRegData)
         if (createdStudentData) {
-            response.successPost(res, createdStudentData, "student Registred");
+            response.successStudentRegistrationPost(res, createdStudentData, "student Registred");
         }
     }
 }
