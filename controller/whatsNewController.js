@@ -49,8 +49,10 @@ async function deleteWhatsNew(req, res, next) {
         let { fileList, idList } = req.body
         console.log("file object", fileList)
 
-        let s3Response = await fileUpload.deleteFile(fileList, 'whatsNew')
-        console.log("dleted s3 response ====================>", s3Response)
+        if (fileList) {
+            let s3Response = await fileUpload.deleteFile(fileList, 'whatsNew')
+            console.log("dleted s3 response ====================>", s3Response)
+        }
         //console.log("file list id ================>",fileList.id)
         let whatsNewWhereCaluse = {
             id: idList
@@ -138,14 +140,14 @@ async function getWhatsNewById(req, res, next) {
         }
         let whatsNewResult = await whatsNewRepo.getWhatsNew(whatsNewWhereCaluse);
         if (whatsNewResult) {
-          //  console.log("whatsNewResult===>",whatsNewResult)
+            //  console.log("whatsNewResult===>",whatsNewResult)
             response.successGet(res, whatsNewResult, "WhatsNew");
         } else {
             response.error(res, "WhatsNew");
         }
 
     } catch (error) {
-        console.log("error====>",error)
+        console.log("error====>", error)
         response.error(res);
     }
 
