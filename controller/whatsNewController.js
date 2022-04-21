@@ -49,7 +49,7 @@ async function deleteWhatsNew(req, res, next) {
         let { fileList, idList } = req.body
         console.log("file object", fileList)
 
-        if (fileList) {
+        if (fileList.key) {
             let s3Response = await fileUpload.deleteFile(fileList, 'whatsNew')
             console.log("dleted s3 response ====================>", s3Response)
         }
