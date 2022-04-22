@@ -40,6 +40,10 @@ module.exports = {
         type: 'TIMESTAMP',
         defaultValue: Sequelize.literal('CURRENT_TIMESTAMP'),
         allowNull: false
+      },
+      flag:{
+        type: Sequelize.STRING,
+        allowNull: false
       }
     });
   },

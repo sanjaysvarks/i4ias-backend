@@ -37,6 +37,10 @@ module.exports = (sequelize, DataTypes) => {
     updatedAt: {
       type: DataTypes.DATE,
       field: 'updatedAt'
+    },
+    flag:{
+      type: DataTypes.STRING,
+      allowNull: false
     }
   }, {});
   studentRegistrations.associate = function(models) {

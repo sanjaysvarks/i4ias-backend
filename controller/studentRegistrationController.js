@@ -7,43 +7,46 @@ const csvGenerator = require('../services/csvFileGenerator')
 
 
 async function createstudentRegistration(req, res, next) {
-    const { name, email, phone, testType, testMode } = req.body
-    
 
-    let RegData  = {
-        [Op.or]: [
-           {
-              phone: {
-                 [Op.eq]: phone
-              },
-           },
-           {
-              email: {
-                 [Op.eq]: email
-              }
-           }
-        ]
-     }
-
-    let studentRegData = {
-        name: name,
-        email: email,
-        phone: phone,
-        testType: testType,
-        testMode: testMode
-    }
-
-
-
-    let result = await studentRegistrationRepo.getstudentRegistrationByCondition(RegData)
-    if (result) {
-        response.errorValidation(res, "Student is already registered with this email id or phone number ")
-    }
-    else {
-        let createdStudentData = await studentRegistrationRepo.createstudentRegistration(studentRegData)
-        if (createdStudentData) {
-            response.successStudentRegistrationPost(res, createdStudentData, "student Registred");
+    try {
+        const { name, email, phone, testType, testMode, flag } = req.body
+        let RegData = {
+            [Op.or]: [
+                {
+                    phone: {
+                        [Op.eq]: phone
+                    },
+                },
+                {
+                    email: {
+                        [Op.eq]: email
+                    }
+                }
+            ]
         }
+        let studentRegData = {
+            name: name,
+            email: email,
+            phone: phone,
+            testType: testType,
+            testMode: testMode,
+            flag: flag
+        }
+
+        let result = await studentRegistrationRepo.getstudentRegistrationByCondition(RegData)
+        if (result) {
+            response.errorValidation(res, "Student is already registered with this email id or phone number ")
+        }
+        else {
+            let createdStudentData = await studentRegistrationRepo.createstudentRegistration(studentRegData)
+            if (createdStudentData) {
+                response.successStudentRegistrationPost(res, createdStudentData, "student Registred");
+            }
+        }
+
+    } catch (error) {
+
+        response.error(res);
     }
 }
 
@@ -52,26 +55,40 @@ async function getstudentRegistration(req, res, next) {
     if (studentRegResult) {
         response.successGet(res, studentRegResult);
     }
-
-    
-
-    
 }
 
 async function excelSheetDataStuReg(req, res, next) {
     let fromDate = req.query.fromDate
     let toDate = req.query.toDate
+    let flag = req.query.flag
 
-    let query = `select  name, email, phone, testType, testMode, 
-                         DATE_FORMAT(createdAt, "%d-%b-%Y") createdAt
+    if (flag) {
+        const query = `select  name, email, phone, testType, testMode, 
+                         DATE_FORMAT(createdAt, "%d-%b-%Y") createdAt,
+                         flag
                 from studentRegistrations
                 where DATE_FORMAT(createdAt, "%d-%b-%Y") >= '${fromDate}' and 
-                      DATE_FORMAT(createdAt, "%d-%b-%Y") <= '${toDate}'`
-    console.log(query)
-    let data = await db.sequelize.query(query)
+                      DATE_FORMAT(createdAt, "%d-%b-%Y") <= '${toDate}' and 
+                      flag = '${flag}'`
+        let data = await db.sequelize.query(query)
 
-    const generatedCSV = csvGenerator.generate(['name', 'email', 'phone', 'testType', 'testMode','createdAt'], data[0])
-    response.successCSV(res, generatedCSV, 'studentList')
+        const generatedCSV = csvGenerator.generate(['name', 'email', 'phone', 'testType', 'testMode', 'createdAt','flag'], data[0])
+        response.successCSV(res, generatedCSV, 'studentList')
+
+    } else {
+        const query = `select  name, email, phone, testType, testMode, 
+                              DATE_FORMAT(createdAt, "%d-%b-%Y") createdAt,
+                              flag
+                    from studentRegistrations
+                    where DATE_FORMAT(createdAt, "%d-%b-%Y") >= '${fromDate}' and 
+                        DATE_FORMAT(createdAt, "%d-%b-%Y") <= '${toDate}'`
+        let data = await db.sequelize.query(query)
+
+        const generatedCSV = csvGenerator.generate(['name', 'email', 'phone', 'testType', 'testMode', 'createdAt','flag'], data[0])
+        response.successCSV(res, generatedCSV, 'studentList')
+    }
+    //console.log(query)
+
 }
 
 module.exports = {
