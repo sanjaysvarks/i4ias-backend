@@ -67,11 +67,12 @@ async function excelSheetDataStuReg(req, res, next) {
                          DATE_FORMAT(createdAt, "%d-%b-%Y") createdAt,
                          flag
                 from studentRegistrations
-                where DATE_FORMAT(createdAt, "%d-%b-%Y") >= '${fromDate}' and 
-                      DATE_FORMAT(createdAt, "%d-%b-%Y") <= '${toDate}' and 
+                where DATE_FORMAT(createdAt,'%Y-%m-%d') >= '${fromDate}' and 
+                      DATE_FORMAT(createdAt,'%Y-%m-%d') <= '${toDate}' and 
                       flag = '${flag}'`
+            
         let data = await db.sequelize.query(query)
-
+ 
         const generatedCSV = csvGenerator.generate(['name', 'email', 'phone', 'testType', 'testMode', 'createdAt','flag'], data[0])
         response.successCSV(res, generatedCSV, 'studentList')
 
@@ -80,14 +81,13 @@ async function excelSheetDataStuReg(req, res, next) {
                               DATE_FORMAT(createdAt, "%d-%b-%Y") createdAt,
                               flag
                     from studentRegistrations
-                    where DATE_FORMAT(createdAt, "%d-%b-%Y") >= '${fromDate}' and 
-                        DATE_FORMAT(createdAt, "%d-%b-%Y") <= '${toDate}'`
+                    where DATE_FORMAT(createdAt,'%Y-%m-%d') >= '${fromDate}' and 
+                          DATE_FORMAT(createdAt,'%Y-%m-%d') <= '${toDate}'`
         let data = await db.sequelize.query(query)
 
         const generatedCSV = csvGenerator.generate(['name', 'email', 'phone', 'testType', 'testMode', 'createdAt','flag'], data[0])
         response.successCSV(res, generatedCSV, 'studentList')
     }
-    //console.log(query)
 
 }
 
