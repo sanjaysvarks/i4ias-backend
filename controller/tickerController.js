@@ -46,9 +46,11 @@ async function deleteTicker(req, res, next) {
     try {
         let { fileList, idList } = req.body
         console.log("file object", fileList)
-
+        
+        if (fileList.key) {
         let s3Response = await fileUpload.deleteFile(fileList, 'ticker')
         console.log("dleted s3 response ====================>", s3Response)
+        }
         //console.log("file list id ================>",fileList.id)
         let tickerWhereCaluse = {
             id: idList
