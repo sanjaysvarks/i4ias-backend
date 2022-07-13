@@ -35,6 +35,11 @@ module.exports = (sequelize, DataTypes) => {
       updatedAt: {
         type: DataTypes.DATE,
         field: 'updatedAt'
+      },
+      isMobile: {
+        allowNull: false,
+        type: DataTypes.ENUM('Y','N'),
+        defaultVaue: 'Y'
       }
 	
   }, {});

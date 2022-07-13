@@ -39,6 +39,11 @@ module.exports = {
         type: 'TIMESTAMP',
         defaultValue: Sequelize.literal('CURRENT_TIMESTAMP'),
         allowNull: false
+      },
+      isMobile: {
+        allowNull: false,
+        type: Sequelize.ENUM('Y','N'),
+        defaultVaue: 'Y'
       }
     });
   },
