@@ -8,7 +8,7 @@ const response = require('../response')
 async function createSlider(req, res, next) {
     try {
         let file = req.files.file;
-        let { heading, description, isPrimary } = req.body
+        let { heading, description, isPrimary,isMobile } = req.body
         const userId = req.headers.userId
         console.log("file object", file)
         let fileName = file.name;
@@ -20,6 +20,7 @@ async function createSlider(req, res, next) {
             imgUrl: s3Response.Location,
             s3FileKey: s3Response.Key,
             isPrimary: isPrimary,
+            isMobile : isMobile,
             userId: userId
         }
 
@@ -108,7 +109,7 @@ async function getHomePageResponse(req, res, next) {
 
 async function updateSlider(req, res, next) {
     try {
-        let { sliderId, heading, description, isPrimary, isNewFile } = req.body
+        let { sliderId, heading, description, isPrimary, isNewFile,isMobile } = req.body
         const userId = req.headers.userId
 
         let sliderWhereCaluse = {
@@ -140,6 +141,7 @@ async function updateSlider(req, res, next) {
                 imgUrl: updatedImgUrl,
                 s3FileKey: updatedS3FileKey,
                 isPrimary: isPrimary,
+                isMobile : isMobile,
                 userId: userId
             }
 
