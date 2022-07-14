@@ -3,7 +3,6 @@ const controller = require('../controller/subscribeController');
 const middleware = require('../middleware/tokenValidation') 
 
 router.post('/createSubscriber',
-//middleware.token,
 controller.createSubscriber);
 
 router.get('/getSubscriber',
