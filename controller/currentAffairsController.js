@@ -297,6 +297,22 @@ async function getRecentRecords(req, res, next) {
 
 }
 
+async function getGenericSearch(req, res, next) {
+    const searchkey = req.query.genSearch;
+
+    let query =`select description, 
+                       content, 
+                       tags, 
+                       categoryType,DATE_FORMAT(currentAffairsDate, "%d-%b-%Y") currentAffairsDate
+                from currentAffairs 
+                where lower(concat(description, content, tags, categoryType, DATE_FORMAT(currentAffairsDate, "%d-%b-%Y"))) like '%${searchkey}%'`	
+
+    let data = await db.sequelize.query(query)
+
+    response.successGet(res, data[0])
+
+}
+
 
 module.exports = {
     createCurrentAffairs,
@@ -314,5 +330,6 @@ module.exports = {
     getCurrentAffairsNavigationByDatenType,
     getCurrentAffairsBycatetoryType,
     getDataFromToDate,
-    getRecentRecords
+    getRecentRecords,
+    getGenericSearch
 }

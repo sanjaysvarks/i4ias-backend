@@ -85,6 +85,13 @@ router.get('/getRecentRecords',
 controller.getRecentRecords
 )
 
+router.get('/getRecordByCondition',
+//middleware.token,
+controller.getGenericSearch
+)
+
+
+
 
 
 module.exports = router;
