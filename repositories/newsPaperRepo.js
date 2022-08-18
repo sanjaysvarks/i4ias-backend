@@ -65,11 +65,27 @@ async function getNewsPaperFolderName(whereCondition) {
     return result;
 
 }
+
+async function getNewsPaperPdfGen(whereCondition) {
+    const result = await newsPapers.findOne({
+        attributes: [
+            'id', 'newsPaperName', 'description', 'content',
+            [db.Sequelize.fn('DATE_FORMAT', db.Sequelize.col('createdDate'), '%d-%b-%Y'), 'createdDate'],
+            'userId', 'createdAt', 'updatedAt'],
+        where: whereCondition,
+        order: [
+            ['id', 'ASC']
+        ]
+    })
+    return result;
+}
+
 module.exports = {
     createNewsPaper,
     deleteNewsPaper,
     updateNewsPaper,
     getNewsPaperByCondition,
     getNewsPaper,
-    getNewsPaperFolderName
+    getNewsPaperFolderName,
+    getNewsPaperPdfGen
 }

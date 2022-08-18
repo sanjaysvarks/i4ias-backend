@@ -3,6 +3,10 @@ const newsPaperRepo = require('../repositories/newsPaperRepo')
 const db = require('../models/index')
 const Op = db.Sequelize.Op
 const Sequelize = db.Sequelize
+const pdf = require('html-pdf');
+var mime = require('mime');
+
+
 
 async function createNewsPaper(req, res, next) {
     try {
@@ -107,8 +111,8 @@ async function getNewPaperDataBWtwodates(req, res, next) {
             Sequelize.literal('DATE_FORMAT(createdDate, "%d-%b-%Y")'),
             { [Op.gte]: fromDate }
         )
-         
-      
+
+
         let todate = Sequelize.where(
             Sequelize.literal('DATE_FORMAT(createdDate, "%d-%b-%Y")'),
             { [Op.lte]: toDate }
@@ -118,7 +122,7 @@ async function getNewPaperDataBWtwodates(req, res, next) {
             Sequelize.literal('newsPaperName'),
             { [Op.eq]: newsPaper }
         )
-       
+
 
         let whereCondition = {
             fromdate,
@@ -230,7 +234,7 @@ async function getNewsPaperNavigationByDate(req, res, next) {
 async function getIdAndNewsPaper(req, res, next) {
     try {
         const {newsPaperName,newsPaperId} = req.body
-      
+
         let newsPaperWhereCaluse = {
             id : newsPaperId,
             newsPaperName: newsPaperName
@@ -242,13 +246,13 @@ async function getIdAndNewsPaper(req, res, next) {
         let result = await newsPaperRepo.getNewsPaperByCondition(newsPaperWhereCaluse, genOrder)
         if (result) {
             console.log(result)
-          response.successGet(res, result, "NewsPaper");
-           
+            response.successGet(res, result, "NewsPaper");
+
         } else {
             response.errorNotFound(res, "NewsPaper");
         }
     } catch (error) {
-       
+
         response.error(res)
     }
 }
@@ -303,6 +307,32 @@ async function getNewsPaperFolderName(req, res, next) {
     }
 }
 
+async function downloadNewsPaper(req, res, next) {
+    try {
+        let newsPaperId = req.query.id;
+        let result = await newsPaperRepo.getNewsPaperPdfGen({id : newsPaperId})
+        var options = { format: 'Letter' };
+        
+       // var header =  `<div id="pageHeader"  style="text-align: center;"><img src = "https://india4ias.com/assets/img/India4IASLogo.png"/> </div>`
+        var header = ``
+        var footer =  `<div id="pageFooter"  style="text-align: center; font-size: 12px;">www.India4IAS.com
+                                             - {{page}}/{{pages}} </div>`
+       // console.log('content getNewsPaperDemo' , result);
+        var dataContainer = `<div style="background:url('http://65.2.42.25/assets/img/India4IASwatermark.png');display:block"><div  style="text-align: center;"><img src = "https://india4ias.com/assets/img/India4IASLogo.png"/> </div>`+result.content+`</div>`;
+       
+
+        pdf.create( header + dataContainer + footer, options).toBuffer(function (err, buffer) {
+            var filename = "sample.pdf";
+            res.setHeader('Content-disposition', 'attachment; filename=' + filename);
+            res.end(buffer)
+        }); 
+    } catch (error) {
+        console.log('Unable to download file',error)
+        res.end("Unable to download file");
+    }
+
+}
+
 module.exports = {
     createNewsPaper,
     updateNewspaper,
@@ -313,5 +343,6 @@ module.exports = {
     getNewsPaperNavigationByDate,
     getIdAndNewsPaper,
     getNewsPaperByDate,
-    getNewsPaperFolderName
+    getNewsPaperFolderName,
+    downloadNewsPaper
 }

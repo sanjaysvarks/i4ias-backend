@@ -55,5 +55,9 @@ router.post('/getNewsPaperFolderName',
 controller.getNewsPaperFolderName
 )
 
+router.get('/pdfdownload',
+    controller.downloadNewsPaper
+)
+
 
 module.exports = router;
