@@ -91,6 +91,11 @@ controller.getGenericSearch
 )
 
 
+router.get('/pdfdownloadCa',
+    controller.downloadCurrentaffairs
+)
+
+
 
 
 

@@ -3,7 +3,7 @@ const currentAffairsRepo = require('../repositories/currentAffairsRepo')
 const db = require('../models/index')
 const Op = db.Sequelize.Op
 const Sequelize = db.Sequelize
-//const pdf = require('html-pdf');
+const pdf = require('html-pdf');
 var mime = require('mime');
 
 
@@ -313,6 +313,31 @@ async function getGenericSearch(req, res, next) {
 
 }
 
+async function downloadCurrentaffairs(req, res, next) {
+    try {
+        let id = req.query.id;
+        let result = await  currentAffairsRepo.getCurrentAffairsDataById(id)
+        var options = { format: 'Letter' };
+        console.log('result',result)
+       // var header =  `<div id="pageHeader"  style="text-align: center;"><img src = "https://india4ias.com/assets/img/India4IASLogo.png"/> </div>`
+        var header = ``
+        var footer =  `<div id="pageFooter"  style="text-align: center; font-size: 12px;">www.India4IAS.com
+                                             - {{page}}/{{pages}} </div>`
+       // console.log('content getNewsPaperDemo' , result);
+        var dataContainer = `<div style="background:url('http://65.2.42.25/assets/img/India4IASwatermark.png');display:block"><div  style="text-align: center;"><img src = "https://india4ias.com/assets/img/India4IASLogo.png"/> </div>`+result.content+`</div>`;
+       
+
+        pdf.create( header + dataContainer + footer, options).toBuffer(function (err, buffer) {
+            var filename = "sample.pdf";
+            res.setHeader('Content-disposition', 'attachment; filename=' + filename);
+            res.end(buffer)
+        }); 
+    } catch (error) {
+        console.log('Unable to download file',error)
+        res.end("Unable to download file");
+    }
+
+}
 
 module.exports = {
     createCurrentAffairs,
@@ -331,5 +356,6 @@ module.exports = {
     getCurrentAffairsBycatetoryType,
     getDataFromToDate,
     getRecentRecords,
-    getGenericSearch
+    getGenericSearch,
+    downloadCurrentaffairs
 }
